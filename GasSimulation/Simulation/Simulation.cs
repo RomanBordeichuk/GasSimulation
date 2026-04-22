@@ -1,16 +1,14 @@
 ﻿using GasSimulation.Simulation.DTOs;
-using GasSimulation.Simulation.DTOs.Interfaces;
-using GasSimulation.Simulation.Exceptions;
 using GasSimulation.Simulation.UIElements;
 
 namespace GasSimulation.Simulation
 {
     public static class Simulation
     {
-        private static List<Element> _uiElems = null!;
-        private static List<IElemState> _elemStates = null!;
+        private static AllElems _uiElems = null!;
+        private static AllStates _elemStates;
 
-        public static void Initialize(List<Element> uiElems, List<IElemState> elemStates)
+        public static void Initialize(AllElems uiElems, AllStates elemStates)
         {
             _uiElems = uiElems;
             _elemStates  = elemStates;
@@ -25,13 +23,14 @@ namespace GasSimulation.Simulation
 
         private static void SetStates()
         {
-            for (int i = 0; i < _uiElems.Count; i++)
+            for (int i = 0; i < _uiElems.Atoms.Count; i++)
             {
-                if (_elemStates[i] is AtomState atom)
-                    _uiElems[i].UpdatePos(atom.Pos);
-                else if (_elemStates[i] is RectState rect)
-                    _uiElems[i].UpdatePos(rect.Pos);
-                else throw new IncorrectTypeException();
+                _uiElems.Atoms[i].UpdatePos(_elemStates.Atoms[i].Pos);
+            }
+
+            for (int i = 0; i < _uiElems.Rects.Count; i++)
+            {
+                _uiElems.Rects[i].UpdatePos(_elemStates.Rects[i].Pos);
             }
         }
     }

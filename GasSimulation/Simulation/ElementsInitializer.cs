@@ -1,5 +1,4 @@
 ﻿using GasSimulation.Simulation.DTOs;
-using GasSimulation.Simulation.DTOs.Interfaces;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
 using GasSimulation.Simulation.UIElements;
 
@@ -10,10 +9,11 @@ namespace GasSimulation.Simulation
         private static readonly double _mult = Constants.SpeedMult / Constants.FPS;
 
         private static MainWindow _mainWindow = null!;
-        private static List<Element> _uiElems = new();
-        private static List<IElemState> _elemStates = new();
+        private static AllElems _uiElems = new();
+        private static List<AtomState> _atomStates = new();
+        private static List<RectState> _rectStates = new();
 
-        public static (List<Element> uiElems, List<IElemState> elemStates) 
+        public static (AllElems uiElems, AllStates elemStates) 
             Initialize(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
@@ -46,7 +46,7 @@ namespace GasSimulation.Simulation
             //AddAtom(100, 100, 100, 74);
             //AddAtom(104, 200, 90, -90);
 
-            return (_uiElems, _elemStates);
+            return (_uiElems, new(_atomStates, _rectStates));
         }
 
         private static void AddAtom(double x, double y, double speed, double angle)
@@ -60,7 +60,10 @@ namespace GasSimulation.Simulation
 
             uiAtom.UpdatePos(new(x, y));
 
-            AddElem(uiAtom, atomState);
+            _atomStates.Add(atomState);
+            _uiElems.Atoms.Add(uiAtom);
+
+            AddUIElem(uiAtom);
         }
 
         private static void AddRect(double x, double y, double width, double height, double angle)
@@ -73,13 +76,14 @@ namespace GasSimulation.Simulation
 
             uiRect.UpdatePos(new(x, y));
 
-            AddElem(uiRect, rectState);
+            _rectStates.Add(rectState);
+            _uiElems.Rects.Add(uiRect);
+
+            AddUIElem(uiRect);
         }
 
-        private static void AddElem(Element uiElem, IElemState elemState)
+        private static void AddUIElem(Element uiElem)
         {
-            _elemStates.Add(elemState);
-            _uiElems.Add(uiElem);
             _mainWindow.SimulationField.Children.Add(uiElem.Obj);
         }
 

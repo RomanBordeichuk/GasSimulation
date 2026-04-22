@@ -2,7 +2,7 @@
 
 namespace GasSimulation.Simulation.DTOs
 {
-    internal struct CollisionState<T1, T2>
+    public struct CollisionState<T1, T2>
         where T1 : IElemState where T2 : IElemState
     {
         public T1 Obj1 { get; set; }

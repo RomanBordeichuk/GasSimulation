@@ -101,3 +101,4 @@ C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Tests
 C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Tests\obj\Debug\net10.0-windows\GasSimulation.Tests.pdb
 C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Tests\obj\Debug\net10.0-windows\GasSimulation.Tests.genruntimeconfig.cache
 C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Tests\obj\Debug\net10.0-windows\ref\GasSimulation.Tests.dll
+C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Tests\obj\Debug\net10.0-windows\GasSimulation.Tests.sourcelink.json

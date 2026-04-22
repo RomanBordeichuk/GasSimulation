@@ -77,22 +77,19 @@ namespace GasSimulation.Tests.Integration
         {
             //Arrange
 
-            List<IElemState> elems = new(atoms.Length + rects.Length);
-
-            foreach (var atom in atoms) elems.Add(atom);
-            foreach (var rect in rects) elems.Add(rect);
+            AllStates elemStates = new(atoms, rects);
 
             int precision = (int)-Math.Log10(Constants.ErrorRate);
 
             //Act
 
-            for (int i = 0; i < iterations; i++) IterationCalculator.Calculate(elems);
+            for (int i = 0; i < iterations; i++) IterationCalculator.Calculate(elemStates);
 
             //Assert
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                AtomState atom = (AtomState)elems[i];
+                AtomState atom = elemStates.Atoms[i];
 
                 Assert.Equal(expAtoms[i].X, atom.X, precision);
                 Assert.Equal(expAtoms[i].Y, atom.Y, precision);

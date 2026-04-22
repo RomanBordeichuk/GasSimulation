@@ -2,7 +2,6 @@
 {
     public interface IElemState
     {
-        public double X { get; }
-        public double Y { get; }
+
     }
 }
