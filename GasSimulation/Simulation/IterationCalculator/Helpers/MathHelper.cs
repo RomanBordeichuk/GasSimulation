@@ -1,0 +1,70 @@
+﻿using GasSimulation.Simulation.DTOs;
+using GasSimulation.Simulation.Loggers;
+
+namespace GasSimulation.Simulation.IterationCalculator.Helpers
+{
+    public static class MathHelper
+    {
+        public static bool Equals(double a, double b)
+        {
+            return Math.Abs(a - b) < Constants.ErrorRate;
+        }
+
+        public static double CalculateCollisionAngle(PosState pos1, PosState pos2)
+        {
+            double dx = pos1.X - pos2.X;
+            double dy = pos1.Y - pos2.Y;
+
+            if (Equals(dx, 0)) return Math.PI / 2;
+
+            return Math.Atan(dy / dx);
+        }
+
+        public static VelocityState TransformToNewBasis(VelocityState v, double angle)
+        {
+            double newDx = v.Dx * Math.Cos(angle) + v.Dy * Math.Sin(angle);
+            double newDy = -v.Dx * Math.Sin(angle) + v.Dy * Math.Cos(angle);
+
+            return new(newDx, newDy);
+        }
+
+        public static PosState TransformToNewBasis(PosState pos, double angle)
+        {
+            VelocityState v = TransformToNewBasis(new VelocityState(pos.X, pos.Y), angle);
+
+            return new(v.Dx, v.Dy);
+        }
+
+        public static AtomState RotateField(AtomState a, double angle)
+        {
+            AtomState newA = new(TransformToNewBasis(a.Pos, -angle),
+                TransformToNewBasis(a.Velocity, -angle));
+
+            return newA;
+        }
+
+        public static PosState TranslateField(PosState pos1, PosState pos2)
+        {
+            return new(pos1.X - pos2.X, pos1.Y - pos2.Y);
+        }
+
+        public static (double dx1, double dx2) RecalculateMomentum(double dx1, double dx2, double m1, double m2)
+        {
+            double newDx1 = (m1 * dx1 + m2 * dx2 - Constants.Restitution * m2 * (dx1 - dx2)) /
+                (m1 + m2);
+
+            double newDx2 = (m1 * dx1 + m2 * dx2 + Constants.Restitution * m1 * (dx1 - dx2)) /
+                (m1 + m2);
+
+            return (newDx1, newDx2);
+        }
+
+        public static (double dx, double dy) DecomposeVelocity(double speed, double angle)
+        {
+            double dx = speed * Math.Cos(angle * Math.PI / 180);
+            double dy = speed * Math.Sin(angle * Math.PI / 180);
+
+            return (dx, dy);
+        }
+    }
+}

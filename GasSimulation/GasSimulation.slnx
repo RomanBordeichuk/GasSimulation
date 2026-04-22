@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../GasSimulation.Tests/GasSimulation.Tests.csproj" Id="b0ebbabc-ccb0-44e8-98fb-7095598e1e15" />
+  <Project Path="GasSimulation.csproj" />
+</Solution>
