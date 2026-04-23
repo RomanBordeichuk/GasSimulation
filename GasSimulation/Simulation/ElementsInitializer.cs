@@ -6,8 +6,6 @@ namespace GasSimulation.Simulation
 {
     static class ElementsInitializer
     {
-        private static readonly double _mult = Constants.SpeedMult / Constants.FPS;
-
         private static MainWindow _mainWindow = null!;
         private static AllElems _uiElems = new();
         private static List<AtomState> _atomStates = new();
@@ -31,29 +29,39 @@ namespace GasSimulation.Simulation
 
 
 
-            AddAtom(40, 52.2, 70, 0);
-            AddAtom(70, 72, 70, 0);
-            AddAtom(100, 80, 70, 0);
-            AddAtom(100, 60, 70, 0);
-            AddAtom(100, 120, 70, 0);
-            AddAtom(100, 140, 70, 0);
+            //AddAtom(40, 52.2, 70, 0);
+            //AddAtom(70, 72, 70, 0);
+            //AddAtom(100, 80, 70, 0);
+            //AddAtom(100, 60, 70, 0);
+            //AddAtom(100, 120, 70, 0);
+            //AddAtom(100, 140, 70, 0);
 
-            AddRect(300, 100, 150, 15, 30);
-            AddRect(300, 150, 150, 15, 90);
+            //AddRect(300, 100, 150, 15, 30);
+            //AddRect(300, 150, 150, 15, 90);
 
 
 
             //AddAtom(100, 100, 100, 74);
             //AddAtom(104, 200, 90, -90);
 
+            RectState gasArea = new RectState(-100, -100, 600, 500, 0);
+            var atomsList = GasGenerator.GasGenerator.Generate(gasArea, 300, 100);
+
+            AddRect(-100, 250, 600, 15, 90);
+            AddRect(700, 250, 600, 15, 90);
+            AddRect(300, -50, 800, 15, 0);
+            AddRect(300, 550, 800, 15, 0);
+
+            foreach (var atom in atomsList) AddAtom(atom);
+
             return (_uiElems, new(_atomStates, _rectStates));
         }
 
-        private static void AddAtom(double x, double y, double speed, double angle)
+        private static void AddAtom(AtomInitState atom)
         {
-            (x, y) = TransformPos(x, y);
+            (double x, double y) = TransformPos(atom.X, atom.Y);
 
-            (double dx, double dy) = MathHelper.DecomposeVelocity(speed * _mult, angle);
+            (double dx, double dy) = MathHelper.DecomposeVelocity(atom.Speed * Statics.Mult, atom.Angle);
 
             AtomState atomState = new(x, y, dx, dy);
             Atom uiAtom = new();

@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\simulation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\simulation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\elementsinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\elementsinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\gasgenerator\\gasgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\gasgenerator\\gasgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\gasgenerator\\atomgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\gasgenerator\\atomgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\gasgenerator\\fillrandompartlyoccupiedcell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\gasgenerator\\fillrandompartlyoccupiedcell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\gasgenerator\\fillrandomfreecell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\gasgenerator\\fillrandomfreecell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,17 +30,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "ElementsInitializer.cs",
               "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\ElementsInitializer.cs",
               "RelativeDocumentMoniker": "Simulation\\ElementsInitializer.cs",
               "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\ElementsInitializer.cs",
               "RelativeToolTip": "Simulation\\ElementsInitializer.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwCoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACAAAAAAAAAAAAAqwDEAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-19T15:57:35.775Z",
               "IsPinned": true,
@@ -36,16 +48,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Simulation.cs",
-              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\Simulation.cs",
-              "RelativeDocumentMoniker": "Simulation\\Simulation.cs",
-              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\Simulation.cs",
-              "RelativeToolTip": "Simulation\\Simulation.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABNAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "GasGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\GasGenerator.cs",
+              "RelativeDocumentMoniker": "Simulation\\GasGenerator\\GasGenerator.cs",
+              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\GasGenerator.cs",
+              "RelativeToolTip": "Simulation\\GasGenerator\\GasGenerator.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T10:25:55.369Z",
-              "IsPinned": true,
+              "WhenOpened": "2026-04-23T09:57:18.06Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FillRandomFreeCell.cs",
+              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\FillRandomFreeCell.cs",
+              "RelativeDocumentMoniker": "Simulation\\GasGenerator\\FillRandomFreeCell.cs",
+              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\FillRandomFreeCell.cs",
+              "RelativeToolTip": "Simulation\\GasGenerator\\FillRandomFreeCell.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:34:39.508Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FillRandomPartlyOccupiedCell.cs",
+              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\FillRandomPartlyOccupiedCell.cs",
+              "RelativeDocumentMoniker": "Simulation\\GasGenerator\\FillRandomPartlyOccupiedCell.cs",
+              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\FillRandomPartlyOccupiedCell.cs",
+              "RelativeToolTip": "Simulation\\GasGenerator\\FillRandomPartlyOccupiedCell.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAowB4AAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:34:12.969Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AtomGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\AtomGenerator.cs",
+              "RelativeDocumentMoniker": "Simulation\\GasGenerator\\AtomGenerator.cs",
+              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\AtomGenerator.cs",
+              "RelativeToolTip": "Simulation\\GasGenerator\\AtomGenerator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T16:04:02.479Z",
               "EditorCaption": ""
             }
           ]

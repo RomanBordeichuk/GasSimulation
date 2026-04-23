@@ -1,5 +1,4 @@
 ﻿using GasSimulation.Simulation.DTOs;
-using GasSimulation.Simulation.Loggers;
 
 namespace GasSimulation.Simulation.IterationCalculator.Helpers
 {
@@ -65,6 +64,11 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
             double dy = speed * Math.Sin(angle * Math.PI / 180);
 
             return (dx, dy);
+        }
+
+        public static double CalculateDistance(PosState pos1, PosState pos2)
+        {
+            return Math.Pow((pos1.X - pos2.X) * (pos1.X - pos2.X) + (pos1.Y - pos2.Y) * (pos1.Y - pos2.Y), 0.5);
         }
     }
 }

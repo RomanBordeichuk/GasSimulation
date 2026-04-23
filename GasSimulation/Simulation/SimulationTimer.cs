@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using GasSimulation.Simulation.Loggers;
+using System.Diagnostics;
 using System.Windows.Threading;
 
 namespace GasSimulation.Simulation
@@ -18,7 +19,7 @@ namespace GasSimulation.Simulation
             _timer.Interval = TimeSpan.FromMilliseconds(1000 / Constants.FPS);
             _timer.Tick += (s, e) =>
             {
-                Debug.WriteLine($"Running... Iteration: {iteration}");
+                Logger.Log($"Running... Iteration: {iteration}");
 
                 Simulation.Run();
 
@@ -31,13 +32,13 @@ namespace GasSimulation.Simulation
             if (_paused)
             {
                 _paused = false;
-                Debug.WriteLine("Starting...");
+                Logger.Log("Starting...");
                 _timer.Start();
             }
             else
             {
                 _paused = true;
-                Debug.WriteLine("Stopping...");
+                Logger.Log("Stopping...");
                 _timer.Stop();
             }
         }

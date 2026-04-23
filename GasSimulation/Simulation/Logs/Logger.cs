@@ -8,7 +8,7 @@ namespace GasSimulation.Simulation.Loggers
     {
         public static void Log(string message)
         {
-            Debug.WriteLine(message);
+            //Debug.WriteLine(message);
         }
 
         public static void LogData(this List<IElemState> elems)
