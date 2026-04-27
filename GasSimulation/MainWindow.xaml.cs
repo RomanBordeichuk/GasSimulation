@@ -13,9 +13,16 @@ namespace GasSimulation
         {
             InitializeComponent();
 
-            (var uiElems, var elemStates) = ElementsInitializer.Initialize(this);
-            Simulation.Simulation.Initialize(uiElems, elemStates);
-            SimulationTimer.Initialize();
+            var configManager = new ConfigManager("SimulationConfig.json");
+
+            configManager.SetLogsState();
+            var config = configManager.GetConfig();
+
+            (var uiElems, var elemStates) = ElementsInitializer.Initialize(
+                config, configManager.GetElemInitStates(), this);
+
+            Simulation.Simulation.Initialize(config, uiElems, elemStates);
+            SimulationTimer.Initialize(config);
         }
 
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

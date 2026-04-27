@@ -5,21 +5,21 @@ namespace GasSimulation.Simulation.IterationCalculator
 {
     public static class CollisionCalculator
     {
-        public static (double? t, double? angle) CalculateAtomTAndAngle(
+        public static (double? t, double? angle) CalculateAtomTAndAngle(Config config,
             AtomState atomState1, AtomState atomState2, double remT)
         {
-            return CalculateAtomTAndAngle(atomState1, atomState2, remT,
-                Constants.AtomDiameter / 2, Constants.AtomDiameter / 2);
+            return CalculateAtomTAndAngle(config, atomState1, atomState2, remT,
+                config.AtomDiameter / 2, config.AtomDiameter / 2);
         }
 
-        public static (double? t, double? angle) CalculateAtomTAndAngle(
+        public static (double? t, double? angle) CalculateAtomTAndAngle(Config config,
             AtomState atomState1, AtomState atomState2, double remT, double r1, double r2)
         {
             return CollisionCalculatorHelper.CalculateAtomTAndAngle(
-                atomState1, atomState2, remT, r1, r2);
+                config, atomState1, atomState2, remT, r1, r2);
         }
 
-        public static (double? t, double? angle) CalculateRectTAndAngle(
+        public static (double? t, double? angle) CalculateRectTAndAngle(Config config,
             AtomState atomState, RectState rectState, double remT)
         {
             PosState updatedPos = MathHelper.TranslateField(atomState.Pos, rectState.Pos);
@@ -28,7 +28,7 @@ namespace GasSimulation.Simulation.IterationCalculator
             atomState = MathHelper.RotateField(atomState, -rectState.Angle);
 
             (double? t, double? angle) = CollisionCalculatorHelper.CalculateRectTAndAngle(
-                atomState, rectState.Dimentions, remT);
+                config, atomState, rectState.Dimentions, remT);
 
 
 
@@ -38,7 +38,7 @@ namespace GasSimulation.Simulation.IterationCalculator
         }
 
         public static (VelocityState v1, VelocityState v2) CalculateVelocities(
-            AtomState atomState1, AtomState atomState2, double angle)
+            Config config, AtomState atomState1, AtomState atomState2, double angle)
         {
             VelocityState v1 = atomState1.Velocity;
             VelocityState v2 = atomState2.Velocity;
@@ -46,8 +46,7 @@ namespace GasSimulation.Simulation.IterationCalculator
             v1 = MathHelper.TransformToNewBasis(v1, angle);
             v2 = MathHelper.TransformToNewBasis(v2, angle);
 
-            (double dx1, double dx2) = MathHelper.RecalculateMomentum(
-                v1.Dx, v2.Dx, atomState1.M, atomState2.M);
+            (double dx1, double dx2) = MathHelper.RecalculateMomentum(config, v1.Dx, v2.Dx);
 
             v1 = new(dx1, v1.Dy);
             v2 = new(dx2, v2.Dy);

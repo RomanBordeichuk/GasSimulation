@@ -4,11 +4,11 @@ namespace GasSimulation.Simulation.GasGenerator
 {
     public static class AtomGenerator
     {
-        public static AtomInitState Generate(PosState pos, double avSpeed)
+        public static AtomInitState Generate(Config config, PosState pos, double speed)
         {
-            double randAngle = (Statics.Rand.NextDouble() - 0.5) * 360;
+            double randAngle = (config.Rand.NextDouble() - 0.5) * 360;
 
-            return new(pos.X, pos.Y, avSpeed, randAngle);
+            return new(pos.X, pos.Y, speed, randAngle);
         }
     }
 }

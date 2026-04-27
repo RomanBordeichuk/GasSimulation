@@ -1,46 +1,63 @@
-﻿using GasSimulation.Simulation.DTOs;
-using GasSimulation.Simulation.Exceptions;
+﻿using GasSimulation.Exceptions;
+using GasSimulation.Simulation.DTOs;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
 
 namespace GasSimulation.Simulation.GasGenerator
 {
     public static class FillRandomPartlyOccupiedCell
     {
-        public static PosState Fill(ref CellState[,] cellsMatrix, 
+        public static PosState Fill(Config config, CellsArray cellsArray, 
             List<(int i, int j)> partlyOccupiedCellsIds)
         {
+            CellState partlyOccupiedCell;
             double relX = 0;
             double relY = 0;
-            CellState partlyOccupiedCell;
+            int cellId;
 
             while (true)
             {
                 if (partlyOccupiedCellsIds.Count == 0) throw new NotEnoughPlaceException();
 
-                int cellId = Statics.Rand.Next(0, partlyOccupiedCellsIds.Count);
-                partlyOccupiedCell = cellsMatrix[
-                    partlyOccupiedCellsIds[cellId].i, partlyOccupiedCellsIds[cellId].j];
+                cellId = config.Rand.Next(0, partlyOccupiedCellsIds.Count);
+                partlyOccupiedCell = cellsArray.Array[partlyOccupiedCellsIds[cellId].i * cellsArray.Width + 
+                    partlyOccupiedCellsIds[cellId].j];
 
                 int attempts;
 
-                for (attempts = 0; attempts < Constants.PasteAtomAttempts; attempts++)
+                for (attempts = 0; attempts < config.PasteAtomAttempts; attempts++)
                 {
-                    relX = Statics.Rand.NextDouble() - 0.5 * Constants.AtomDiameter / (2 * Statics.Sqrt2);
-                    relY = Statics.Rand.NextDouble() - 0.5 * Constants.AtomDiameter / (2 * Statics.Sqrt2);
+                    relX = (config.Rand.NextDouble() - 0.5) * config.AtomDiameter / Config.Sqrt2;
+                    relY = (config.Rand.NextDouble() - 0.5) * config.AtomDiameter / Config.Sqrt2;
 
-                    foreach (PosState pos in partlyOccupiedCell.NearNeighbs)
-                    {
-                        if (MathHelper.CalculateDistance(pos, new(relX, relY)) > Constants.AtomDiameter)
-                            break;
-                    }
+                    PosState newPos = MathHelper.TranslateField(partlyOccupiedCell.Pos, new(-relX, -relY));
+
+                    if (!HasIntersection(config, newPos, partlyOccupiedCell.NearNeighbs)) break; 
                 }
-                
-                partlyOccupiedCellsIds.RemoveAt(cellId);
 
-                if (attempts < Constants.PasteAtomAttempts) break;
+                if (attempts < config.PasteAtomAttempts)
+                {
+                    return FillEmptyCell.Fill(cellId, relX, relY,
+                        cellsArray, partlyOccupiedCellsIds, partlyOccupiedCellsIds);
+                }
+                else
+                {
+                    partlyOccupiedCellsIds[cellId] = partlyOccupiedCellsIds[partlyOccupiedCellsIds.Count - 1];
+                    partlyOccupiedCellsIds.RemoveAt(partlyOccupiedCellsIds.Count - 1);
+                }
+            }
+        }
+
+        private static bool HasIntersection(Config config, PosState newPos, List<PosState> neighbs)
+        {
+            foreach (PosState pos in neighbs)
+            {
+                if (MathHelper.CalculateDistance(newPos, pos) <= config.AtomDiameter)
+                {
+                    return true;
+                }
             }
 
-            return MathHelper.TranslateField(partlyOccupiedCell.Pos, new(-relX, -relY));
+            return false;
         }
     }
 }

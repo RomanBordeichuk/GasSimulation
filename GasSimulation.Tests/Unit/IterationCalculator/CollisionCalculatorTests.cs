@@ -1,11 +1,10 @@
-﻿using GasSimulation.Simulation;
-using GasSimulation.Simulation.DTOs;
+﻿using GasSimulation.Simulation.DTOs;
 using GasSimulation.Simulation.IterationCalculator;
 using System.Diagnostics.CodeAnalysis;
 
 namespace GasSimulation.Tests.Unit.IterationCalculator
 {
-    public class CollisionCalculatorTests
+    public class CollisionCalculatorTests : TestsBase
     {
         [Theory]
         [InlineData(
@@ -52,7 +51,7 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
 
             //Act
 
-            (double? t, double? angle) = CollisionCalculator.CalculateAtomTAndAngle(atomState1, atomState2, remT);
+            (double? t, double? angle) = CollisionCalculator.CalculateAtomTAndAngle(_config, atomState1, atomState2, remT);
 
             //Assert
 
@@ -63,8 +62,8 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
             }
             else
             {
-                Assert.Equal(expT.Value, t!.Value, (int)-Math.Log10(Constants.ErrorRate));
-                Assert.Equal(expAngle!.Value, angle!.Value, (int)-Math.Log10(Constants.ErrorRate));
+                Assert.Equal(expT.Value, t!.Value, _config.Presicion);
+                Assert.Equal(expAngle!.Value, angle!.Value, _config.Presicion);
             }
         }
 
@@ -109,14 +108,14 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
             //Act
 
             (VelocityState v1, VelocityState v2) = CollisionCalculator.CalculateVelocities(
-                atomState1, atomState2, angle);
+                _config, atomState1, atomState2, angle);
 
             //Assert
 
-            Assert.Equal(expV1x, v1.Dx, (int)-Math.Log10(Constants.ErrorRate));
-            Assert.Equal(expV1y, v1.Dy, (int)-Math.Log10(Constants.ErrorRate));
-            Assert.Equal(expV2x, v2.Dx, (int)-Math.Log10(Constants.ErrorRate));
-            Assert.Equal(expV2y, v2.Dy, (int)-Math.Log10(Constants.ErrorRate));
+            Assert.Equal(expV1x, v1.Dx, _config.Presicion);
+            Assert.Equal(expV1y, v1.Dy, _config.Presicion);
+            Assert.Equal(expV2x, v2.Dx, _config.Presicion);
+            Assert.Equal(expV2y, v2.Dy, _config.Presicion);
         }
 
         [Theory]
@@ -207,7 +206,8 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
 
             //Act
 
-            (double? t, double? angle) = CollisionCalculator.CalculateRectTAndAngle(atomState, rectState, remT);
+            (double? t, double? angle) = CollisionCalculator.CalculateRectTAndAngle(
+                _config, atomState, rectState, remT);
 
             //Accert
 
@@ -218,8 +218,8 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
             }
             else
             {
-                Assert.Equal(expT.Value, t!.Value, (int)-Math.Log10(Constants.ErrorRate));
-                Assert.Equal(expAngle!.Value, angle!.Value, (int)-Math.Log10(Constants.ErrorRate));
+                Assert.Equal(expT.Value, t!.Value, _config.Presicion);
+                Assert.Equal(expAngle!.Value, angle!.Value, _config.Presicion);
             }
         }
 
@@ -271,8 +271,8 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
 
             //Assert
 
-            Assert.Equal(expDx, v.Dx, (int)-Math.Log10(Constants.ErrorRate));
-            Assert.Equal(expDy, v.Dy, (int)-Math.Log10(Constants.ErrorRate));
+            Assert.Equal(expDx, v.Dx, _config.Presicion);
+            Assert.Equal(expDy, v.Dy, _config.Presicion);
         }
     }
 }

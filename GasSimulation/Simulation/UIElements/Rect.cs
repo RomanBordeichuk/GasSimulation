@@ -10,7 +10,8 @@ namespace GasSimulation.Simulation.UIElements
         private readonly double _width;
         private readonly double _height;
 
-        public Rect(double width, double height, double angle) 
+        public Rect(Config config, double width, double height, double angle) 
+            : base(config)
         {
             _width = width;
             _height = height;

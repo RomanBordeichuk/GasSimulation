@@ -13,6 +13,7 @@
 
         public PosState Pos { get; }
         public List<PosState> NearNeighbs { get; }
+        public CellStatus Status { get; set; }
 
         public CellState(double x, double y)
             : this(new(x, y)) { }
@@ -20,8 +21,13 @@
         public CellState(PosState pos)
         {
             Pos = pos;
-
             NearNeighbs = new();
+            Status = CellStatus.Free;
+        }
+
+        public enum CellStatus
+        {
+            Free, PartlyOccupied, Occupied
         }
     }
 }

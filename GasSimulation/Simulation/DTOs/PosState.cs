@@ -2,8 +2,8 @@
 {
     public struct PosState
     { 
-        public double X { get; }
-        public double Y { get; }
+        public double X { get; init; }
+        public double Y { get; init; }
 
         public PosState(double x, double y)
         {

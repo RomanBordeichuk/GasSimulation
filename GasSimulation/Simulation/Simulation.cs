@@ -5,18 +5,20 @@ namespace GasSimulation.Simulation
 {
     public static class Simulation
     {
+        private static Config _config = null!;
         private static AllElems _uiElems = null!;
         private static AllStates _elemStates;
 
-        public static void Initialize(AllElems uiElems, AllStates elemStates)
+        public static void Initialize(Config config, AllElems uiElems, AllStates elemStates)
         {
+            _config = config;
             _uiElems = uiElems;
             _elemStates  = elemStates;
         }
 
         public static void Run()
         {
-            IterationCalculator.IterationCalculator.Calculate(_elemStates);
+            IterationCalculator.IterationCalculator.Calculate(_config, _elemStates);
 
             SetStates();
         }

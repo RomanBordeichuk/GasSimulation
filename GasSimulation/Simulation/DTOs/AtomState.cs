@@ -23,10 +23,6 @@ namespace GasSimulation.Simulation.DTOs
 
         public PosState Pos { get; }
         public VelocityState Velocity { get; }
-        public double M { get; } = Constants.AtomMass;
-
-        public AtomState(double x, double y, double dx, double dy)
-            : this(x, y, dx, dy, Constants.AtomMass) { }
 
         public AtomState(PosState pos, VelocityState velocity)
         {
@@ -34,17 +30,10 @@ namespace GasSimulation.Simulation.DTOs
             Velocity = velocity;
         }
 
-        public AtomState(double x, double y, double dx, double dy, double m)
+        public AtomState(double x, double y, double dx, double dy)
         {
             Pos = new(x, y);
             Velocity = new(dx, dy);
-            M = m;
-        }
-
-        public AtomState(PosState pos, VelocityState velocity, double m)
-            : this(pos, velocity)
-        {
-            M = m;
         }
     }
 }

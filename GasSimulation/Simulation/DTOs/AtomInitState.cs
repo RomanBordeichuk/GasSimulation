@@ -2,15 +2,25 @@
 {
     public struct AtomInitState
     {
-        public double X { get; }
-        public double Y { get; }
+        public double X
+        {
+            get => Pos.X;
+        }
+        public double Y
+        {
+            get => Pos.Y;
+        }
+
+        public PosState Pos { get; }
         public double Speed { get; }
         public double Angle { get; }
 
         public AtomInitState(double x, double y, double speed, double angle)
+            : this(new(x, y), speed, angle) { }
+
+        public AtomInitState(PosState pos, double speed, double angle)
         {
-            X = x;
-            Y = y;
+            Pos = pos;
             Speed = speed;
             Angle = angle;
         }

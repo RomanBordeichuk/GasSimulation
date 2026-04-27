@@ -1,11 +1,9 @@
-﻿using GasSimulation.Simulation;
-using GasSimulation.Simulation.DTOs;
-using GasSimulation.Simulation.DTOs.Interfaces;
+﻿using GasSimulation.Simulation.DTOs;
 using GasSimulation.Simulation.IterationCalculator;
 
 namespace GasSimulation.Tests.Integration
 {
-    public class IterationCalculatorTests
+    public class IterationCalculatorTests : TestsBase
     {
         public static IEnumerable<object[]> MultipleAtomsNRects_StandartCase_ExpectedResult_Data()
         {
@@ -79,11 +77,9 @@ namespace GasSimulation.Tests.Integration
 
             AllStates elemStates = new(atoms, rects);
 
-            int precision = (int)-Math.Log10(Constants.ErrorRate);
-
             //Act
 
-            for (int i = 0; i < iterations; i++) IterationCalculator.Calculate(elemStates);
+            for (int i = 0; i < iterations; i++) IterationCalculator.Calculate(_config, elemStates);
 
             //Assert
 
@@ -91,10 +87,10 @@ namespace GasSimulation.Tests.Integration
             {
                 AtomState atom = elemStates.Atoms[i];
 
-                Assert.Equal(expAtoms[i].X, atom.X, precision);
-                Assert.Equal(expAtoms[i].Y, atom.Y, precision);
-                Assert.Equal(expAtoms[i].Dx, atom.Dx, precision);
-                Assert.Equal(expAtoms[i].Dy, atom.Dy, precision);
+                Assert.Equal(expAtoms[i].X, atom.X, _config.Presicion);
+                Assert.Equal(expAtoms[i].Y, atom.Y, _config.Presicion);
+                Assert.Equal(expAtoms[i].Dx, atom.Dx, _config.Presicion);
+                Assert.Equal(expAtoms[i].Dy, atom.Dy, _config.Presicion);
             }
         }
     }

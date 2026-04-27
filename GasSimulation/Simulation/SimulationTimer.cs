@@ -1,5 +1,4 @@
-﻿using GasSimulation.Simulation.Loggers;
-using System.Diagnostics;
+﻿using GasSimulation.Logs;
 using System.Windows.Threading;
 
 namespace GasSimulation.Simulation
@@ -7,16 +6,15 @@ namespace GasSimulation.Simulation
     static class SimulationTimer
     {
         private static DispatcherTimer _timer = null!;
-
         private static bool _paused = true;
 
-        static public void Initialize()
+        static public void Initialize(Config config)
         {
             _timer = new(DispatcherPriority.Render);
 
             int iteration = 0;
 
-            _timer.Interval = TimeSpan.FromMilliseconds(1000 / Constants.FPS);
+            _timer.Interval = TimeSpan.FromMilliseconds(1000 / config.FPS);
             _timer.Tick += (s, e) =>
             {
                 Logger.Log($"Running... Iteration: {iteration}");

@@ -24,9 +24,9 @@ namespace GasSimulation.Simulation.DTOs
             get => Dimentions.Height;
         }
 
-        public PosState Pos { get; }
-        public DimentState Dimentions { get; }
-        public double Angle { get; }
+        public PosState Pos { get; init; }
+        public DimentState Dimentions { get; init; }
+        public double Angle { get; init; }
 
         public RectState(double x, double y, double width, double height, double angle)
         {

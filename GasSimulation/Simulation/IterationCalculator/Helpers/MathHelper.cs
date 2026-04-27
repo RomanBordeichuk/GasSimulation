@@ -4,9 +4,9 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
 {
     public static class MathHelper
     {
-        public static bool Equals(double a, double b)
+        public static bool Equals(double a, double b, double errorRate)
         {
-            return Math.Abs(a - b) < Constants.ErrorRate;
+            return Math.Abs(a - b) < errorRate;
         }
 
         public static double CalculateCollisionAngle(PosState pos1, PosState pos2)
@@ -42,18 +42,20 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
             return newA;
         }
 
+        public static PosState RotateField(PosState pos, double angle)
+        {
+            return TransformToNewBasis(pos, -angle);
+        }
+
         public static PosState TranslateField(PosState pos1, PosState pos2)
         {
             return new(pos1.X - pos2.X, pos1.Y - pos2.Y);
         }
 
-        public static (double dx1, double dx2) RecalculateMomentum(double dx1, double dx2, double m1, double m2)
+        public static (double dx1, double dx2) RecalculateMomentum(Config config, double dx1, double dx2)
         {
-            double newDx1 = (m1 * dx1 + m2 * dx2 - Constants.Restitution * m2 * (dx1 - dx2)) /
-                (m1 + m2);
-
-            double newDx2 = (m1 * dx1 + m2 * dx2 + Constants.Restitution * m1 * (dx1 - dx2)) /
-                (m1 + m2);
+            double newDx1 = (dx1 + dx2 - config.Restitution * (dx1 - dx2)) / 2;
+            double newDx2 = (dx1 + dx2 + config.Restitution * (dx1 - dx2)) / 2;
 
             return (newDx1, newDx2);
         }

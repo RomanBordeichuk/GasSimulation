@@ -6,8 +6,8 @@ namespace GasSimulation.Simulation.UIElements
 {
     public abstract class Element
     {
-        protected static readonly Color _elemColor = (Color)(ColorConverter.ConvertFromString(Constants.AtomColorHex))!;
-        protected static readonly SolidColorBrush _elemColorBrush = new SolidColorBrush(_elemColor);
+        protected Config _config;
+        protected SolidColorBrush _elemColorBrush;
 
         protected Shape _obj = null!;
 
@@ -17,5 +17,13 @@ namespace GasSimulation.Simulation.UIElements
         }
 
         public abstract void UpdatePos(PosState pos);
+
+        protected Element(Config config)
+        {
+            _config = config;
+
+            var elemColor = (Color)(ColorConverter.ConvertFromString(config.AtomColorHex))!;
+            _elemColorBrush = new SolidColorBrush(elemColor);
+        }
     }
 }

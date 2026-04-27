@@ -1,13 +1,10 @@
-﻿using GasSimulation.Simulation;
-using GasSimulation.Simulation.DTOs;
+﻿using GasSimulation.Simulation.DTOs;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
 
 namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
 {
-    public class MathHelperTests
+    public class MathHelperTests : TestsBase
     {
-        private static int _precision = (int)-Math.Log10(Constants.ErrorRate);
-
         [Theory]
         [InlineData(0.0, 0.0, true)]
         [InlineData(1.0, 1.435546, false)]
@@ -16,7 +13,7 @@ namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
         {
             //Act
 
-            bool res = MathHelper.Equals(a, b);
+            bool res = MathHelper.Equals(a, b, _config.ErrorRate);
 
             //Assert
 
@@ -32,7 +29,7 @@ namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
             0.3411956354527345)]
         [InlineData(
             300.0, 247.3684210526316, 300.0, 257.36842105263156,
-            1.5707963267948966)]
+            -1.5707963267948966)]
         public void CalculateCollisionAngle_StandartCase_ExpectedResult(
             double x1, double y1, double x2, double y2,
             double expAngle)
@@ -48,7 +45,7 @@ namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
 
             //Assert
 
-            Assert.Equal(expAngle, angle, _precision);
+            Assert.Equal(expAngle, angle, _config.Presicion);
         }
 
         [Theory]
@@ -72,8 +69,8 @@ namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
 
             //Assert
 
-            Assert.Equal(expDx, newV.Dx, _precision);
-            Assert.Equal(expDy, newV.Dy, _precision);
+            Assert.Equal(expDx, newV.Dx, _config.Presicion);
+            Assert.Equal(expDy, newV.Dy, _config.Presicion);
         }
 
         [Theory]
@@ -98,30 +95,30 @@ namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
 
             //Assert
 
-            Assert.Equal(expX, newPos.X, _precision);
-            Assert.Equal(expY, newPos.Y, _precision);
+            Assert.Equal(expX, newPos.X, _config.Presicion);
+            Assert.Equal(expY, newPos.Y, _config.Presicion);
         }
 
         [Theory]
         [InlineData(
-            4.582575694955842, -4.124318125460258, 1.0, 1.0,
+            4.582575694955842, -4.124318125460258,
             -4.124318125460258, 4.582575694955841)]
         [InlineData(
-            4.720419829680665, -4.411183668492287, 1.0, 1.0,
+            4.720419829680665, -4.411183668492287,
             -4.411183668492287, 4.720419829680665)]
         public void RecalculateMomentum_StandartCase_ExpectedResult(
-            double dx1, double dx2, double m1, double m2, 
+            double dx1, double dx2, 
             double expDx1, double expDx2)
         {
             //Act
 
             (double newDx1, double newDx2) = MathHelper.RecalculateMomentum(
-                dx1, dx2, m1, m2);
+                _config, dx1, dx2);
 
             //Arrange
 
-            Assert.Equal(expDx1, newDx1, _precision);
-            Assert.Equal(expDx2, newDx2, _precision);
+            Assert.Equal(expDx1, newDx1, _config.Presicion);
+            Assert.Equal(expDx2, newDx2, _config.Presicion);
         }
 
         [Theory]
@@ -162,8 +159,8 @@ namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
 
             //Assert
 
-            Assert.Equal(expDx, dx, _precision);
-            Assert.Equal(expDy, dy, _precision);
+            Assert.Equal(expDx, dx, _config.Presicion);
+            Assert.Equal(expDy, dy, _config.Presicion);
         }
     }
 }
