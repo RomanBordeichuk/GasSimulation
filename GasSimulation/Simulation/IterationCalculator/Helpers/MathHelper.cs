@@ -72,5 +72,15 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
         {
             return Math.Pow((pos1.X - pos2.X) * (pos1.X - pos2.X) + (pos1.Y - pos2.Y) * (pos1.Y - pos2.Y), 0.5);
         }
+
+        public static double TransformAngleToRAD(double angle)
+        {
+            return angle * Math.PI / 180;
+        }
+
+        public static double TransformAngleToDEG(double angle)
+        {
+            return angle * 180 / Math.PI;
+        }
     }
 }

@@ -8,8 +8,6 @@
         Title="GasSimulation" Height="450" Width="800" Background="Black"
         KeyDown="Window_KeyDown">
     <Grid x:Name="MainContainer">
-        <Canvas x:Name="SimulationField">
-            
-        </Canvas>
+        <local:ParticleRenderer x:Name="ParticleRenderer" />
     </Grid>
 </Window>

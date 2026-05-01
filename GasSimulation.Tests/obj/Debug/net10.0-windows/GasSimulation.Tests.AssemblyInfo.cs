@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GasSimulation.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a69786794664f99bec5e60d3171808a23456fb8c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d6e5cfac6ce72a9032a405bd6dda1ec81ef04ac9")]
 [assembly: System.Reflection.AssemblyProductAttribute("GasSimulation.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GasSimulation.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -18,10 +18,10 @@ namespace GasSimulation
             configManager.SetLogsState();
             var config = configManager.GetConfig();
 
-            (var uiElems, var elemStates) = ElementsInitializer.Initialize(
-                config, configManager.GetElemInitStates(), this);
+            var rawInitStates = configManager.GetElemInitStates();
+            var elemStates = ConfigInitStateTransformer.Transform(config, rawInitStates);
 
-            Simulation.Simulation.Initialize(config, uiElems, elemStates);
+            Simulation.Simulation.Initialize(config, this.ParticleRenderer, elemStates);
             SimulationTimer.Initialize(config);
         }
 

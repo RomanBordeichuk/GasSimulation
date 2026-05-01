@@ -26,8 +26,8 @@ namespace GasSimulation.Simulation.GasGenerator
 
                 for (attempts = 0; attempts < config.PasteAtomAttempts; attempts++)
                 {
-                    relX = (config.Rand.NextDouble() - 0.5) * config.AtomDiameter / Config.Sqrt2;
-                    relY = (config.Rand.NextDouble() - 0.5) * config.AtomDiameter / Config.Sqrt2;
+                    relX = (config.Rand.NextDouble() - 0.5) * config.AtomDiameter / config.Sqrt2;
+                    relY = (config.Rand.NextDouble() - 0.5) * config.AtomDiameter / config.Sqrt2;
 
                     PosState newPos = MathHelper.TranslateField(partlyOccupiedCell.Pos, new(-relX, -relY));
 

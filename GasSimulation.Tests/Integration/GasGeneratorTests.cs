@@ -1,5 +1,6 @@
 ﻿using GasSimulation.Exceptions;
 using GasSimulation.Simulation.DTOs;
+using GasSimulation.Simulation.DTOs.Config;
 using GasSimulation.Simulation.GasGenerator;
 
 namespace GasSimulation.Tests.Integration
@@ -13,7 +14,7 @@ namespace GasSimulation.Tests.Integration
                 42, 10,
                 new RectState(200, 100, 400, 400, 0),
                 40, 100,
-                new List<AtomInitState>
+                new List<AtomConfigInitState>
                 {
                     new(261.1004414628422, 196.3469637965363, 100, 8.195139369086881),
                     new(71.04205609433961, -18.621346037182704, 100, 4.652204953437762),
@@ -63,7 +64,7 @@ namespace GasSimulation.Tests.Integration
                 240, 60,
                 new RectState(200, 100, 400, 400, 0),
                 20, 100,
-                new List<AtomInitState>
+                new List<AtomConfigInitState>
                 {
                     new(40.38309974280372, 207.13263418760522, 100, 102.40723149963061),
                     new(170.0621623068368, 161.07851850134398, 100, 124.71643760088666),
@@ -93,7 +94,7 @@ namespace GasSimulation.Tests.Integration
                 180, 30,
                 new RectState(200, 100, 400, 400, 0),
                 20, 100,
-                new List<AtomInitState>
+                new List<AtomConfigInitState>
                 {
                     new(287.66730787534607, 271.5270138222512, 100, 172.0399308540113),
                     new(186.4339442174902, 164.8324845676646, 100, 88.33333679862942),
@@ -123,7 +124,7 @@ namespace GasSimulation.Tests.Integration
                 150, 30,
                 new RectState(200, 100, 400, 400, 0),
                 110, 100,
-                new List<AtomInitState> { }
+                new List<AtomConfigInitState> { }
             };
         }
 
@@ -131,30 +132,37 @@ namespace GasSimulation.Tests.Integration
         [MemberData(nameof(Generate_StandartCase_ExpectedResult_Data))]
         public void Generate_StandartCase_ExpectedResult(
             int seed, double atomDiameter, RectState area, int numAtoms, double avSpeed, 
-            List<AtomInitState> expAtoms)
+            List<AtomConfigInitState> expAtoms)
         {
             // Arrange
 
-            var config = _config with
-            {
-                AtomDiameter = atomDiameter,
-                Rand = new Random(seed)
-            };
+            var config = new Config(
+                _config.FPS,
+                _config.SpeedMult,
+                _config.StartPosX,
+                _config.StartPosY,
+                _config.Restitution,
+                _config.ErrorRate,
+                atomDiameter,
+                _config.PasteAtomAttempts,
+                _config.AtomColorHex);
+
+            config.Rand = new Random(seed);
 
             //Act
 
             try
             {
-                List<AtomInitState> atoms = GasGenerator.Generate(config, area, numAtoms, avSpeed);
+                List<AtomConfigInitState> atoms = GasGenerator.Generate(config, area, numAtoms, avSpeed);
 
                 //Assert
 
                 for (int i = 0; i < numAtoms; i++)
                 {
-                    Assert.Equal(expAtoms[i].X, atoms[i].X, config.Presicion);
-                    Assert.Equal(expAtoms[i].Y, atoms[i].Y, config.Presicion);
-                    Assert.Equal(expAtoms[i].Speed, atoms[i].Speed, config.Presicion);
-                    Assert.Equal(expAtoms[i].Angle, atoms[i].Angle, config.Presicion);
+                    Assert.Equal(expAtoms[i].X, atoms[i].X, config.Precision);
+                    Assert.Equal(expAtoms[i].Y, atoms[i].Y, config.Precision);
+                    Assert.Equal(expAtoms[i].Speed, atoms[i].Speed, config.Precision);
+                    Assert.Equal(expAtoms[i].Angle, atoms[i].Angle, config.Precision);
                 }
             }
             catch (Exception ex)

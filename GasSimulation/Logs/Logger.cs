@@ -1,4 +1,5 @@
 ﻿using GasSimulation.Simulation.DTOs;
+using GasSimulation.Simulation.DTOs.Config;
 using GasSimulation.Simulation.DTOs.Interfaces;
 using System.Diagnostics;
 
@@ -29,7 +30,7 @@ namespace GasSimulation.Logs
             if (_enabled) Debug.WriteLine(message);
         }
 
-        public static void LogInitState(this List<AtomInitState> atoms)
+        public static void LogInitState(this List<AtomConfigInitState> atoms)
         {
             Log("Init state:");
 

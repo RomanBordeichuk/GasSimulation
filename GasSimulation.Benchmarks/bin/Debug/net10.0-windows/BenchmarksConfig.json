@@ -1,0 +1,13 @@
+{
+  "SimulationConstants": {
+    "FPS": 20,
+    "SpeedMult": 1,
+    "StartPosX": 200,
+    "StartPosY": 100,
+    "Restitution": 1,
+    "ErrorRate": 1e-10,
+    "AtomDiameter": 10,
+    "PasteAtomAttempts": 20,
+    "AtomColorHex": "#FFFFFF"
+  }
+}

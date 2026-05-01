@@ -1,6 +1,6 @@
 ﻿using GasSimulation.Exceptions;
 using GasSimulation.Logs;
-using GasSimulation.Simulation.DTOs;
+using GasSimulation.Simulation.DTOs.Config;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
@@ -12,7 +12,7 @@ namespace GasSimulation
         private readonly Config _simulationConfig;
 
         public ConfigManager(string configFileName)
-        {
+         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile(configFileName);
@@ -32,7 +32,7 @@ namespace GasSimulation
             Logger.Enabled = _configuration.GetSection("EnableLogs").Get<bool>();
         }
 
-        public List<AllConfigInitState> GetElemInitStates()
+        public List<ConfigInitState> GetElemInitStates()
         {
             var initStates = _configuration.GetSection("InitStates")
                 ?? throw new ConfigErrorException();
@@ -46,13 +46,13 @@ namespace GasSimulation
             return MapVariantsAndFilter(variants, activeVariants);
         }
 
-        private static List<AllConfigInitState> MapVariantsAndFilter(
+        private static List<ConfigInitState> MapVariantsAndFilter(
             IConfigurationSection variants, List<int> activeVariants)
         {
-            var rawVariantsList = variants.Get<List<AllConfigInitState>>()
+            var rawVariantsList = variants.Get<List<ConfigInitState>>()
                 ?? throw new ConfigErrorException();
 
-            List<AllConfigInitState> resList = new();
+            List<ConfigInitState> resList = new();
 
             foreach (int i in activeVariants)
             {

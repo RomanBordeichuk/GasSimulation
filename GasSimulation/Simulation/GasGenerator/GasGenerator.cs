@@ -1,18 +1,19 @@
 ﻿using GasSimulation.Exceptions;
 using GasSimulation.Logs;
 using GasSimulation.Simulation.DTOs;
+using GasSimulation.Simulation.DTOs.Config;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
 
 namespace GasSimulation.Simulation.GasGenerator
 {
     public static class GasGenerator
     {
-        public static List<AtomInitState>
+        public static List<AtomConfigInitState>
             Generate(Config config, RectState area, int numAtoms, double speed)
         {
             area = new(area.Pos, area.Dimentions, area.Angle * Math.PI / 180);
 
-            double cellSize = config.AtomDiameter / Config.Sqrt2;
+            double cellSize = config.AtomDiameter / config.Sqrt2;
 
             int numCellsX = (int)((area.Width - config.AtomDiameter) / cellSize);
             int numCellsY = (int)((area.Height - config.AtomDiameter) / cellSize);
@@ -35,7 +36,7 @@ namespace GasSimulation.Simulation.GasGenerator
                 }
             }
 
-            List<AtomInitState> atoms = new();
+            List<AtomConfigInitState> atoms = new();
 
             for (int i = 0; i < numAtoms; i++)
             {

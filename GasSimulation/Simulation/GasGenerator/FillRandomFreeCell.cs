@@ -9,8 +9,8 @@ namespace GasSimulation.Simulation.GasGenerator
         {
             int randomId = config.Rand.Next(0, freeCellsIds.Count);
 
-            double relX = (config.Rand.NextDouble() - 0.5) * config.AtomDiameter / Config.Sqrt2;
-            double relY = (config.Rand.NextDouble() - 0.5) * config.AtomDiameter / Config.Sqrt2;
+            double relX = (config.Rand.NextDouble() - 0.5) * config.AtomDiameter / config.Sqrt2;
+            double relY = (config.Rand.NextDouble() - 0.5) * config.AtomDiameter / config.Sqrt2;
 
             return FillEmptyCell.Fill(randomId, relX, relY, 
                 cellsArray, freeCellsIds, partlyOccupiedCellsIds);

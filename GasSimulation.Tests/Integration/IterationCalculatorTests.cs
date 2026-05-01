@@ -79,7 +79,7 @@ namespace GasSimulation.Tests.Integration
 
             //Act
 
-            for (int i = 0; i < iterations; i++) IterationCalculator.Calculate(_config, elemStates);
+            for (int i = 0; i < iterations; i++) IterationCalculatorOld.Calculate(_config, elemStates);
 
             //Assert
 
@@ -87,10 +87,10 @@ namespace GasSimulation.Tests.Integration
             {
                 AtomState atom = elemStates.Atoms[i];
 
-                Assert.Equal(expAtoms[i].X, atom.X, _config.Presicion);
-                Assert.Equal(expAtoms[i].Y, atom.Y, _config.Presicion);
-                Assert.Equal(expAtoms[i].Dx, atom.Dx, _config.Presicion);
-                Assert.Equal(expAtoms[i].Dy, atom.Dy, _config.Presicion);
+                Assert.Equal(expAtoms[i].X, atom.X, _config.Precision);
+                Assert.Equal(expAtoms[i].Y, atom.Y, _config.Precision);
+                Assert.Equal(expAtoms[i].Dx, atom.Dx, _config.Precision);
+                Assert.Equal(expAtoms[i].Dy, atom.Dy, _config.Precision);
             }
         }
     }
