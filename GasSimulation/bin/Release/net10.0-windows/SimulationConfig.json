@@ -11,8 +11,6 @@
     "AtomColorHex": "#FFFFFF"
   },
 
-  "EnableLogs": false,
-
   "InitStates": {
     "Active": [ 3, 4 ],
     "Variants": [
@@ -58,7 +56,7 @@
         "Gas": [
           {
             "Area": [ 200, 250, 500, 500, 0 ],
-            "NumAtoms": 600,
+            "NumAtoms": 200,
             "AtomSpeed": 100
           }
         ],

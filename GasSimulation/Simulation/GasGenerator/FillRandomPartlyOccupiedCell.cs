@@ -1,5 +1,7 @@
-﻿using GasSimulation.Exceptions;
-using GasSimulation.Simulation.DTOs;
+﻿using GasSimulation.Debuggers;
+using GasSimulation.Exceptions;
+using GasSimulation.GeneralDTOs;
+using GasSimulation.Simulation.GasGenerator.DTOs;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
 
 namespace GasSimulation.Simulation.GasGenerator
@@ -41,6 +43,8 @@ namespace GasSimulation.Simulation.GasGenerator
                 }
                 else
                 {
+                    GasGeneratorVDHepler.CreateOccupiedCell(partlyOccupiedCell);
+
                     partlyOccupiedCellsIds[cellId] = partlyOccupiedCellsIds[partlyOccupiedCellsIds.Count - 1];
                     partlyOccupiedCellsIds.RemoveAt(partlyOccupiedCellsIds.Count - 1);
                 }

@@ -1,4 +1,5 @@
-﻿using GasSimulation.Simulation.DTOs;
+﻿using GasSimulation.GeneralDTOs;
+using GasSimulation.GeneralDTOs.Atom;
 
 namespace GasSimulation.Simulation.IterationCalculator.Helpers
 {

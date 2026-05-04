@@ -1,5 +1,6 @@
-﻿using GasSimulation.Simulation.DTOs;
-using GasSimulation.Simulation.DTOs.Config;
+﻿using GasSimulation.GeneralDTOs;
+using GasSimulation.GeneralDTOs.Atom;
+using GasSimulation.Simulation.InitStateTransformer.DTOs;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
 
 namespace GasSimulation.Simulation.Mappers

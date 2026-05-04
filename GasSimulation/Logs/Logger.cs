@@ -1,35 +1,20 @@
-﻿using GasSimulation.Simulation.DTOs;
-using GasSimulation.Simulation.DTOs.Config;
-using GasSimulation.Simulation.DTOs.Interfaces;
+﻿using GasSimulation.GeneralDTOs.Atom;
+using GasSimulation.GeneralDTOs.Interfaces;
+using GasSimulation.GeneralDTOs.Rect;
+using GasSimulation.Simulation.InitStateTransformer.DTOs;
 using System.Diagnostics;
 
 namespace GasSimulation.Logs
 {
     public static class Logger
     {
-        private static bool _stateSetted = false;
-        private static bool _enabled = false;
-
-        public static bool Enabled
-        {
-            get => _enabled;
-            set
-            {
-                if (_stateSetted)
-                    throw new InvalidOperationException("Logger state already setted");
-                else
-                {
-                    _enabled = value;
-                    _stateSetted = true;
-                }
-            }
-        }
-
+        [Conditional("DEBUG")]
         public static void Log(string message)
         {
-            if (_enabled) Debug.WriteLine(message);
+            Debug.WriteLine(message);
         }
 
+        [Conditional("DEBUG")]
         public static void LogInitState(this List<AtomConfigInitState> atoms)
         {
             Log("Init state:");
@@ -45,6 +30,7 @@ namespace GasSimulation.Logs
             Log("----------------");
         }
 
+        [Conditional("DEBUG")]
         public static void LogData(this List<IElemState> elems)
         {
             Log("Iteration data");

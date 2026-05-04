@@ -1,4 +1,6 @@
-﻿using GasSimulation.Simulation.DTOs;
+﻿using GasSimulation.GeneralDTOs;
+using GasSimulation.GeneralDTOs.Atom;
+using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Simulation.IterationCalculator;
 using System.Diagnostics.CodeAnalysis;
 

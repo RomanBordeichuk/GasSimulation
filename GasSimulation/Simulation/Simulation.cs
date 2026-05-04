@@ -1,17 +1,18 @@
 ﻿using GasSimulation.Simulation.DTOs;
+using GasSimulation.UIRendering;
 
 namespace GasSimulation.Simulation
 {
     public static class Simulation
     {
         private static Config _config = null!;
-        private static ParticleRenderer _renderer = null!;
+        private static SimulationField _field = null!;
         private static AllStates _elemStates;
 
-        public static void Initialize(Config config, ParticleRenderer renderer, AllStates elemStates)
+        public static void Initialize(Config config, SimulationField field, AllStates elemStates)
         {
             _config = config;
-            _renderer = renderer;
+            _field = field;
             _elemStates  = elemStates;
 
             Render();
@@ -26,7 +27,7 @@ namespace GasSimulation.Simulation
 
         private static void Render()
         {
-            _renderer.RenderFrame(_config, _elemStates);
+            _field.RenderFrame(_config, _elemStates);
         }
     }
 }

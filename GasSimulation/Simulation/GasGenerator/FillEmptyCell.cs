@@ -1,4 +1,7 @@
-﻿using GasSimulation.Simulation.DTOs;
+﻿using GasSimulation.Debuggers;
+using GasSimulation.GeneralDTOs;
+using GasSimulation.GeneralDTOs.Rect;
+using GasSimulation.Simulation.GasGenerator.DTOs;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
 
 namespace GasSimulation.Simulation.GasGenerator
@@ -18,6 +21,8 @@ namespace GasSimulation.Simulation.GasGenerator
             freeCellsIds.RemoveAt(freeCellsIds.Count - 1);
 
             CellState freeCell = cellsArray.Array[i * cellsArray.Width + j];
+
+            GasGeneratorVDHepler.CreateOccupiedCell(freeCell);
 
             PosState pos = MathHelper.TranslateField(freeCell.Pos, new(-relX, -relY));
 
@@ -63,6 +68,9 @@ namespace GasSimulation.Simulation.GasGenerator
                         CellState.CellStatus.Occupied) return;
                 else if (cellsArray.Array[i * cellsArray.Width + j].Status == CellState.CellStatus.Free)
                 {
+                    GasGeneratorVDHepler.CreatePartlyOccupiedCell(
+                        cellsArray.Array[i * cellsArray.Width + j]);
+
                     for (int k = 0; k < freeCellsIds.Count; k++)
                     {
                         if (freeCellsIds[k].i == i && freeCellsIds[k].j == j)

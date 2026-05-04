@@ -6,12 +6,13 @@
     "StartPosY": 100,
     "Restitution": 1,
     "ErrorRate": 1e-10,
-    "AtomDiameter": 10,
+    "AtomDiameter": 30,
     "PasteAtomAttempts": 20,
-    "AtomColorHex": "#FFFFFF"
+    "ElemColorHex": [ 255, 255, 255, 255 ],
+    "OccupiedCellColorHex": [ 150, 255, 134, 107 ],
+    "PartlyOccupiedCellColorHex": [ 150, 255, 213, 97 ],
+    "SectorColorHex": [ 150, 117, 255, 239 ]
   },
-
-  "EnableLogs": false,
 
   "InitStates": {
     "Active": [ 3, 4 ],
@@ -57,8 +58,8 @@
       { // Variant 3
         "Gas": [
           {
-            "Area": [ 200, 250, 500, 500, 0 ],
-            "NumAtoms": 800,
+            "Area": [ 200, 250, 500, 500, 0 ], // Bug with width/height
+            "NumAtoms": 100,
             "AtomSpeed": 100
           }
         ],

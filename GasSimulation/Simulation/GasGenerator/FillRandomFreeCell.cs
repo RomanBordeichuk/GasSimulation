@@ -1,4 +1,5 @@
-﻿using GasSimulation.Simulation.DTOs;
+﻿using GasSimulation.GeneralDTOs;
+using GasSimulation.Simulation.GasGenerator.DTOs;
 
 namespace GasSimulation.Simulation.GasGenerator
 {

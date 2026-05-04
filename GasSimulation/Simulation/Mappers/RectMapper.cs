@@ -1,4 +1,5 @@
-﻿using GasSimulation.Simulation.DTOs;
+﻿using GasSimulation.GeneralDTOs;
+using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
 
 namespace GasSimulation.Simulation.Mappers

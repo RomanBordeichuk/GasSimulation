@@ -1,7 +1,7 @@
 ﻿using GasSimulation.Exceptions;
-using GasSimulation.Simulation.DTOs;
-using GasSimulation.Simulation.DTOs.Config;
+using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Simulation.GasGenerator;
+using GasSimulation.Simulation.InitStateTransformer.DTOs;
 
 namespace GasSimulation.Tests.Integration
 {

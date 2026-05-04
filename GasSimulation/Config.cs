@@ -7,9 +7,13 @@ namespace GasSimulation
     {
         private readonly double _mult;
         private readonly int _precision;
-        private readonly SolidColorBrush _brush;
-        private readonly SolidColorBrush _blackBrush;
         private readonly double _sqrt;
+
+        private readonly SolidColorBrush _blackBrush;
+        private readonly SolidColorBrush _elemBrush;
+        private readonly SolidColorBrush _occupiedCellBrush;
+        private readonly SolidColorBrush _partlyOccupiedCellBrush;
+        private readonly SolidColorBrush _sectorBrush;
 
         private bool _settedRand = false;
         private Random _rand = new Random();
@@ -22,13 +26,18 @@ namespace GasSimulation
         public double ErrorRate { get; }
         public double AtomDiameter { get; }
         public int PasteAtomAttempts { get; }
-        public string AtomColorHex { get; } = null!;
+
+        public byte[] ElemColorHex { get; } = null!;
+        public byte[] OccupiedCellColorHex { get; } = null!;
+        public byte[] PartlyOccupiedCellColorHex { get; } = null!;
+        public byte[] SectorColorHex { get; } = null!;
 
 
         [SuppressMessage("SonarLint", "S107")]
         public Config(double fps, double speedMult, double startPosX, double startPosY, 
             double restitution, double errorRate, double atomDiameter, int pasteAtomAttempts, 
-            string atomColorHex)
+            byte[] elemColorHex, byte[] occupiedCellColorHex, byte[] partlyOccupiedCellColorHex,
+            byte[] sectorColorHex)
         {
             FPS = fps; 
             SpeedMult = speedMult;
@@ -38,25 +47,45 @@ namespace GasSimulation
             ErrorRate = errorRate;
             AtomDiameter = atomDiameter;
             PasteAtomAttempts = pasteAtomAttempts;
-            AtomColorHex = atomColorHex;
+
+            DebuggerWaitHandler = new TaskCompletionSource();
 
             _mult = speedMult / fps;
             _precision = (int)-Math.Log10(errorRate);
 
-            _brush = new SolidColorBrush((Color)(ColorConverter.ConvertFromString(atomColorHex)));
-            _brush.Freeze();
-
-            _blackBrush = new SolidColorBrush(Colors.Black);
+            _blackBrush = CreateBrush([1, 0, 0, 0]);
             _blackBrush.Freeze();
+
+            ElemColorHex = elemColorHex;
+            _elemBrush = CreateBrush(elemColorHex);
+            _elemBrush.Freeze();
+
+            OccupiedCellColorHex = occupiedCellColorHex;
+            _occupiedCellBrush = CreateBrush(occupiedCellColorHex);
+            _occupiedCellBrush.Freeze();
+
+            PartlyOccupiedCellColorHex = partlyOccupiedCellColorHex;
+            _partlyOccupiedCellBrush = CreateBrush(partlyOccupiedCellColorHex);
+            _partlyOccupiedCellBrush.Freeze();
+
+            SectorColorHex = sectorColorHex;
+            _sectorBrush = CreateBrush(sectorColorHex);
+            _sectorBrush.Freeze();
 
             _sqrt = Math.Sqrt(2);
         }
 
+        public TaskCompletionSource DebuggerWaitHandler { get; set; }
+
         public double Mult => _mult;
         public int Precision => _precision;
-        public SolidColorBrush ElemBrush => _brush;
-        public SolidColorBrush BlackBrush => _blackBrush;
         public double Sqrt2 => _sqrt;
+
+        public SolidColorBrush BlackBrush => _blackBrush;
+        public SolidColorBrush ElemBrush => _elemBrush;
+        public SolidColorBrush OccupiedCellBrush => _occupiedCellBrush;
+        public SolidColorBrush PartlyOccupiedCellBrush => _partlyOccupiedCellBrush;
+        public SolidColorBrush SectorBrush => _sectorBrush;
 
         public Random Rand
         {
@@ -70,6 +99,11 @@ namespace GasSimulation
                     _settedRand = true;
                 }
             }
+        }
+
+        private static SolidColorBrush CreateBrush(byte[] color)
+        {
+            return new SolidColorBrush(Color.FromArgb(color[0], color[1], color[2], color[3]));
         }
     }
 }

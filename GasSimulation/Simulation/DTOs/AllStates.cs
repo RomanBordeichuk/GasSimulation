@@ -1,4 +1,7 @@
-﻿namespace GasSimulation.Simulation.DTOs
+﻿using GasSimulation.GeneralDTOs.Atom;
+using GasSimulation.GeneralDTOs.Rect;
+
+namespace GasSimulation.Simulation.DTOs
 {
     public struct AllStates
     {

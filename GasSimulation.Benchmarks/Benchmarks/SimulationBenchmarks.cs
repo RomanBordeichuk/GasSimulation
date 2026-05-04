@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
+using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Simulation.DTOs;
 using GasSimulation.Simulation.GasGenerator;
 using GasSimulation.Simulation.IterationCalculator;

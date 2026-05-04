@@ -1,6 +1,5 @@
 ﻿using GasSimulation.Exceptions;
-using GasSimulation.Logs;
-using GasSimulation.Simulation.DTOs.Config;
+using GasSimulation.Simulation.InitStateTransformer.DTOs;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
@@ -25,11 +24,6 @@ namespace GasSimulation
         public Config GetConfig()
         {
             return _simulationConfig;
-        }
-
-        public void SetLogsState()
-        {
-            Logger.Enabled = _configuration.GetSection("EnableLogs").Get<bool>();
         }
 
         public List<ConfigInitState> GetElemInitStates()
