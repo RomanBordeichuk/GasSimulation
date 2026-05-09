@@ -1,10 +1,18 @@
-﻿using GasSimulation.Simulation.DTOs;
+﻿using GasSimulation.Configuration;
+using GasSimulation.Simulation.DTOs;
 
 namespace GasSimulation.Simulation.IterationCalculator
 {
-    public static class IterationCalculator
+    public class IterationCalculator
     {
-        public static void Calculate(Config config, AllStates allStates)
+        private readonly Config _config;
+
+        public IterationCalculator(Config config)
+        {
+            _config = config;
+        }
+
+        public async ValueTask Calculate(SectorStates sectorStates)
         {
             
         }

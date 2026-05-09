@@ -1,9 +1,10 @@
 ﻿using BenchmarkDotNet.Attributes;
 using GasSimulation.GeneralDTOs.Rect;
+using GasSimulation.Mappers;
 using GasSimulation.Simulation.DTOs;
 using GasSimulation.Simulation.GasGenerator;
 using GasSimulation.Simulation.IterationCalculator;
-using GasSimulation.Simulation.Mappers;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GasSimulation.Benchmarks.Benchmarks
 {
@@ -12,23 +13,30 @@ namespace GasSimulation.Benchmarks.Benchmarks
     public class SimulationBenchmarks : BenchmarksBase
     {
         private AllStates _allStates;
+        private SectorCalculator _iterationCalculator = null!;
 
         [Params(500, 1000)]
         public int NumAtoms { get; set; }
 
         [GlobalSetup]
-        public void Setup()
+        public async ValueTask Setup()
         {
+            var serviceConfigurator = new ServiceConfigurator(_config, null, null);
+            var services = serviceConfigurator.Provider;
+
+            var gasGenerator = services.GetRequiredService<GasGenerator>();
+            _iterationCalculator = services.GetRequiredService<SectorCalculator>();
+
             var area = new RectState(100, 100, 400, 400, 0);
-            var rawAtoms = GasGenerator.Generate(_config, area, NumAtoms, 100);
+            var rawAtoms = await gasGenerator.Generate(area, NumAtoms, 100);
 
             _allStates = new(rawAtoms.MapToStates(_config), new List<RectState>());
         }
 
         [Benchmark]
-        public void CalculateIteration()
+        public async ValueTask CalculateIteration()
         {
-            IterationCalculatorOld.Calculate(_config, _allStates);
+            await _iterationCalculator.Calculate(_allStates);
         }
     }
 }

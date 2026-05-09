@@ -1,33 +1,46 @@
-﻿using GasSimulation.Simulation.DTOs;
+﻿using GasSimulation.Configuration;
+using GasSimulation.Simulation.DTOs;
 using GasSimulation.UIRendering;
+using System.Windows;
 
 namespace GasSimulation.Simulation
 {
-    public static class Simulation
+    public class Simulation
     {
-        private static Config _config = null!;
-        private static SimulationField _field = null!;
-        private static AllStates _elemStates;
+        private readonly Config _config;
+        private readonly IterationCalculator.IterationCalculator _iterationCalculator;
+        private readonly SimulationField? _field;
 
-        public static void Initialize(Config config, SimulationField field, AllStates elemStates)
+        private SectorStates _sectorStates;
+        private readonly bool _renderEnabled;
+
+        public Simulation(Config config, IterationCalculator.IterationCalculator iterationCalculator, 
+            SimulationField? field, SectorStates sectorStates, bool renderEnabled)
         {
             _config = config;
             _field = field;
-            _elemStates  = elemStates;
+            _sectorStates = sectorStates;
+            _renderEnabled = renderEnabled;
+            _iterationCalculator = iterationCalculator;
 
             Render();
         }
 
-        public static void Run()
+        public async ValueTask Run()
         {
-            IterationCalculator.IterationCalculatorOld.Calculate(_config, _elemStates);
+            await _iterationCalculator.Calculate(_sectorStates);
 
             Render();
         }
 
-        private static void Render()
+        private void Render()
         {
-            _field.RenderFrame(_config, _elemStates);
+            if (!_renderEnabled) return;
+
+            Application.Current.Dispatcher.BeginInvoke(() =>
+            {
+                _field!.RenderFrame(_config, _sectorStates);
+            });
         }
     }
 }

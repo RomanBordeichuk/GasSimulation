@@ -1,10 +1,12 @@
-﻿using GasSimulation.Debuggers.DTOs;
+﻿using GasSimulation.Configuration;
+using GasSimulation.Debuggers.DTOs;
+using GasSimulation.Debuggers.DTOs.Interfaces;
 using GasSimulation.Exceptions;
+using GasSimulation.GeneralDTOs;
 using GasSimulation.GeneralDTOs.Atom;
 using GasSimulation.GeneralDTOs.Interfaces;
 using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
-using GasSimulation.UIRendering.DTOs;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -12,87 +14,84 @@ using System.Windows.Shapes;
 
 namespace GasSimulation.UIRendering
 {
-    public static class DebugCanvas
+    public class DebugCanvas
     {
-        private static Config _config = null!;
-        private static Canvas _canvas = null!;
-        private static List<ElemGroup> _groups = new();
+        private readonly Config _config;
+        private readonly Canvas _canvas;
 
-        public static void Initialize(Config config, Canvas canvas)
+        private readonly List<(IElemState elemState, Shape elem)> _elems = new();
+
+        public DebugCanvas(Config config, Canvas canvas)
         {
             _config = config;
             _canvas = canvas;
         }
 
-        public static void ClearGroup(string name)
+        public void ClearAll()
         {
             Application.Current.Dispatcher.BeginInvoke(() =>
             {
-                if (!CheckGroup(name)) throw new IncorrectGroupException();
-
-                var group = _groups.First(g => g.Name == name);
-
-                foreach (var elem in group.Elems)
-                {
-                    _canvas.Children.Remove(elem);
-                }
-
-                _groups.Remove(group);
+                _elems.Clear();
+                _canvas.Children.Clear();
             });
         }
 
-        public static void ClearAll()
+        public void Clear(List<IDrawCommand> group)
+        {
+            foreach (var cmd in group) Clear(cmd);
+        }
+
+        public void Clear(IDrawCommand command)
         {
             Application.Current.Dispatcher.BeginInvoke(() =>
             {
-                foreach (var group in _groups)
-                {
-                    foreach (var elem in group.Elems)
-                    {
-                        _canvas.Children.Remove(elem);
-                    }
-                }
-            });
+                var elem = _elems.First(e => e.elemState.Equals(command.Elem));
 
-            _groups.Clear();
+                _elems.Remove(elem);
+                _canvas.Children.Remove(elem.elem);
+            });
         }
 
-        public static void Draw<T>(string groupName, T elemState, SolidColorBrush brush)
-            where T : IElemState
+        public void Draw(DrawCommand command)
         {
-            if (elemState is AtomState atomState)
+            if (command.Elem is AtomState atomState)
             {
                 Application.Current.Dispatcher.BeginInvoke(() =>
                 {
                     var atom = new Ellipse();
 
-                    AddToGroup(groupName, atom);
+                    _elems.Add((atomState, atom));
 
-                    atom.Width = _config.AtomDiameter;
-                    atom.Height = _config.AtomDiameter;
-                    atom.Fill = brush;
+                    atom.Width = _config.Simulation.AtomDiameter;
+                    atom.Height = _config.Simulation.AtomDiameter;
+                    atom.Fill = command.Brush;
 
-                    Canvas.SetLeft(atom, atomState.X - _config.AtomDiameter / 2);
-                    Canvas.SetTop(atom, atomState.Y - _config.AtomDiameter / 2);
+                    if (command.Zindex != null) Panel.SetZIndex(atom, command.Zindex.Value);
+
+                    Canvas.SetLeft(atom, atomState.X - _config.Simulation.AtomDiameter / 2);
+                    Canvas.SetTop(atom, atomState.Y - _config.Simulation.AtomDiameter / 2);
 
                     _canvas.Children.Add(atom);
                 });
             }
-            else if (elemState is RectState rectState)
+            else if (command.Elem is RectState rectState)
             {
                 Application.Current.Dispatcher.BeginInvoke(() =>
                 {
                     var rect = new Rectangle();
 
-                    AddToGroup(groupName, rect);
+                    _elems.Add((rectState, rect));
 
                     rect.Width = rectState.Width;
                     rect.Height = rectState.Height;
 
                     rect.RenderTransformOrigin = new Point(0.5, 0.5);
-                    rect.RenderTransform = new RotateTransform(MathHelper.TransformAngleToDEG(rectState.Angle));
+                    rect.RenderTransform = new RotateTransform(
+                        MathHelper.TransformAngleToDEG(rectState.Angle));
 
-                    rect.Fill = brush;
+                    rect.Fill = command.Brush;
+
+                    if (command.Zindex != null) Panel.SetZIndex(rect, command.Zindex.Value);
 
                     Canvas.SetLeft(rect, rectState.X - rect.Width / 2);
                     Canvas.SetTop(rect, rectState.Y - rect.Height / 2);
@@ -100,80 +99,82 @@ namespace GasSimulation.UIRendering
                     _canvas.Children.Add(rect);
                 });
             }
-            else if (elemState is VectorState)
+            else if (command.Elem is VectorState vectorState)
             {
-                throw new NotImplementedException();
+                Application.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    var vector = new Line();
+
+                    _elems.Add((vectorState, vector));
+
+                    vector.X1 = vectorState.X1;
+                    vector.Y1 = vectorState.Y1;
+                    vector.X2 = vectorState.X2;
+                    vector.Y2 = vectorState.Y2;
+                    vector.Stroke = command.Brush;
+                    vector.StrokeThickness = vectorState.Thickness;
+
+                    if (command.Zindex != null) Panel.SetZIndex(vector, command.Zindex.Value);
+
+                    _canvas.Children.Add(vector);
+                });
             }
             else throw new IncorrectTypeException();
         }
 
-        public static void DrawHollow<T>(string groupName, T elemState, double border, SolidColorBrush brush)
-    where T : IElemState
+        public void DrawHollow(DrawHollowCommand command)
         {
-            if (elemState is AtomState atomState)
+            if (command.Elem is AtomState atomState)
             {
                 Application.Current.Dispatcher.BeginInvoke(() =>
                 {
                     var atom = new Ellipse();
 
-                    AddToGroup(groupName, atom);
+                    _elems.Add((atomState, atom));
 
-                    atom.Width = _config.AtomDiameter;
-                    atom.Height = _config.AtomDiameter;
-                    atom.Stroke = brush;
+                    atom.Width = _config.Simulation.AtomDiameter + command.Border * 2;
+                    atom.Height = _config.Simulation.AtomDiameter + command.Border * 2;
+                    atom.Stroke = command.Brush;
+                    atom.StrokeThickness = command.Border;
 
-                    Canvas.SetLeft(atom, atomState.X - _config.AtomDiameter / 2);
-                    Canvas.SetTop(atom, atomState.Y - _config.AtomDiameter / 2);
+                    if (command.Zindex != null) Panel.SetZIndex(atom, command.Zindex.Value);
+
+                    Canvas.SetLeft(atom, atomState.X - (_config.Simulation.AtomDiameter + command.Border));
+                    Canvas.SetTop(atom, atomState.Y - (_config.Simulation.AtomDiameter + command.Border));
 
                     _canvas.Children.Add(atom);
                 });
             }
-            else if (elemState is RectState rectState)
+            else if (command.Elem is RectState rectState)
             {
                 Application.Current.Dispatcher.BeginInvoke(() =>
                 {
                     var rect = new Rectangle();
 
-                    AddToGroup(groupName, rect);
+                    _elems.Add((rectState, rect));
 
-                    rect.Width = rectState.Width;
-                    rect.Height = rectState.Height;
+                    rect.Width = rectState.Width + command.Border;
+                    rect.Height = rectState.Height + command.Border;
 
                     rect.RenderTransformOrigin = new Point(0.5, 0.5);
                     rect.RenderTransform = new RotateTransform(MathHelper.TransformAngleToDEG(rectState.Angle));
 
-                    rect.Stroke = brush;
+                    rect.Stroke = command.Brush;
+                    rect.StrokeThickness = command.Border;
 
-                    Canvas.SetLeft(rect, rectState.X - rect.Width / 2);
-                    Canvas.SetTop(rect, rectState.Y - rect.Height / 2);
+                    if (command.Zindex != null) Panel.SetZIndex(rect, command.Zindex.Value);
+
+                    Canvas.SetLeft(rect, rectState.X - (rect.Width + command.Border) / 2);
+                    Canvas.SetTop(rect, rectState.Y - (rect.Height + command.Border) / 2);
 
                     _canvas.Children.Add(rect);
                 });
             }
-            else if (elemState is VectorState)
+            else if (command.Elem is VectorState)
             {
                 throw new NotImplementedException();
             }
             else throw new IncorrectTypeException();
-        }
-
-        private static void AddToGroup<T>(string groupName, T elem)
-            where T : Shape
-        {
-            var group = GetGroup(groupName);
-            group.Elems.Add(elem);
-        }
-
-        private static bool CheckGroup(string name)
-        {
-            return _groups.Any(g => g.Name == name);
-        }
-
-        private static ElemGroup GetGroup(string name)
-        {
-            if (!CheckGroup(name)) _groups.Add(new(name));
-
-            return _groups.FirstOrDefault(g => g.Name == name);
         }
     }
 }

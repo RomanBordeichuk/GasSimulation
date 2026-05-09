@@ -1,4 +1,5 @@
-﻿using GasSimulation.GeneralDTOs;
+﻿using GasSimulation.Configuration;
+using GasSimulation.GeneralDTOs;
 using GasSimulation.GeneralDTOs.Atom;
 using GasSimulation.GeneralDTOs.Rect;
 
@@ -25,7 +26,7 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
             {
                 double t = (-b - Math.Pow(D, 0.5)) / (2 * a);
 
-                if (t > -config.ErrorRate && t < remT)
+                if (t > -config.Simulation.ErrorRate && t < remT)
                 {
                     double x1 = atomState1.X + atomState1.Dx * t;
                     double y1 = atomState1.Y + atomState1.Dy * t;
@@ -51,18 +52,18 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
             CompareTWithAngle(CalculateClosestRectEdgeTAndAngle(config, a, dimentions), ref lowestT, ref lowestAngle);
 
             CompareTWithAngle(CalculateAtomTAndAngle(config, a, new(new(dimentions.Width / 2, dimentions.Height / 2),
-                new(0, 0)), remT, config.AtomDiameter / 2, config.ErrorRate), ref lowestT, ref lowestAngle);
+                new(0, 0)), remT, config.Simulation.AtomDiameter / 2, config.Simulation.ErrorRate), ref lowestT, ref lowestAngle);
 
             CompareTWithAngle(CalculateAtomTAndAngle(config, a, new(new(-dimentions.Width / 2, dimentions.Height / 2),
-                new(0, 0)), remT, config.AtomDiameter / 2, config.ErrorRate), ref lowestT, ref lowestAngle);
+                new(0, 0)), remT, config.Simulation.AtomDiameter / 2, config.Simulation.ErrorRate), ref lowestT, ref lowestAngle);
 
             CompareTWithAngle(CalculateAtomTAndAngle(config, a, new(new(dimentions.Width / 2, -dimentions.Height / 2),
-                new(0, 0)), remT, config.AtomDiameter / 2, config.ErrorRate), ref lowestT, ref lowestAngle);
+                new(0, 0)), remT, config.Simulation.AtomDiameter / 2, config.Simulation.ErrorRate), ref lowestT, ref lowestAngle);
 
             CompareTWithAngle(CalculateAtomTAndAngle(config, a, new(new(-dimentions.Width / 2, -dimentions.Height / 2),
-                new(0, 0)), remT, config.AtomDiameter / 2, config.ErrorRate), ref lowestT, ref lowestAngle);
+                new(0, 0)), remT, config.Simulation.AtomDiameter / 2, config.Simulation.ErrorRate), ref lowestT, ref lowestAngle);
 
-            if (lowestT <= -config.ErrorRate || lowestT >= remT) return (null, null);
+            if (lowestT <= -config.Simulation.ErrorRate || lowestT >= remT) return (null, null);
 
             return (lowestT, lowestAngle);
         }
@@ -73,8 +74,8 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
             double? lowestT = null;
             double? lowestAngle = null;
 
-            if (MathHelper.Equals(a.Dx, 0, config.ErrorRate) && 
-                MathHelper.Equals(a.Dy, 0, config.ErrorRate)) return (null, null);
+            if (MathHelper.Equals(a.Dx, 0, config.Simulation.ErrorRate) && 
+                MathHelper.Equals(a.Dy, 0, config.Simulation.ErrorRate)) return (null, null);
 
             if (CalculateTAndAngleForEdgesWith0dx(config, a, dimentions, ref lowestT, ref lowestAngle))
                 return (lowestT, lowestAngle);
@@ -95,7 +96,7 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
             AtomState a, DimentState dimentions,
             ref double? lowestT, ref double? lowestAngle)
         {
-            if (MathHelper.Equals(a.Dx, 0, config.ErrorRate))
+            if (MathHelper.Equals(a.Dx, 0, config.Simulation.ErrorRate))
             {
                 if (Math.Abs(a.X) >= dimentions.Width / 2)
                 {
@@ -105,8 +106,8 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
                     return true;
                 }
 
-                double tymin = (-dimentions.Height / 2 - config.AtomDiameter / 2 - a.Y) / a.Dy;
-                double tymax = (dimentions.Height / 2 + config.AtomDiameter / 2 - a.Y) / a.Dy;
+                double tymin = (-dimentions.Height / 2 - config.Simulation.AtomDiameter / 2 - a.Y) / a.Dy;
+                double tymax = (dimentions.Height / 2 + config.Simulation.AtomDiameter / 2 - a.Y) / a.Dy;
 
                 if (a.Dy > 0) CompareTWithAngle(tymin, Math.PI / 2, ref lowestT, ref lowestAngle);
                 else CompareTWithAngle(tymax, -Math.PI / 2, ref lowestT, ref lowestAngle);
@@ -121,7 +122,7 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
             AtomState a, DimentState dimentions,
             ref double? lowestT, ref double? lowestAngle)
         {
-            if (MathHelper.Equals(a.Dy, 0, config.ErrorRate))
+            if (MathHelper.Equals(a.Dy, 0, config.Simulation.ErrorRate))
             {
                 if (Math.Abs(a.Y) >= dimentions.Height / 2)
                 {
@@ -131,8 +132,8 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
                     return true;
                 }
 
-                double txmin = (-dimentions.Width / 2 - config.AtomDiameter / 2 - a.X) / a.Dx;
-                double txmax = (dimentions.Width / 2 + config.AtomDiameter / 2 - a.X) / a.Dx;
+                double txmin = (-dimentions.Width / 2 - config.Simulation.AtomDiameter / 2 - a.X) / a.Dx;
+                double txmax = (dimentions.Width / 2 + config.Simulation.AtomDiameter / 2 - a.X) / a.Dx;
 
                 if (a.Dx > 0) CompareTWithAngle(txmin, 0, ref lowestT, ref lowestAngle);
                 else CompareTWithAngle(txmax, Math.PI, ref lowestT, ref lowestAngle);
@@ -153,11 +154,11 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
             double tymin = (-dimentions.Height / 2 - a.Y) / a.Dy;
             double tymax = (dimentions.Height / 2 - a.Y) / a.Dy;
 
-            double t1x = (dimentions.Width / 2 + config.AtomDiameter / 2 - a.X) / a.Dx;
-            double t2x = (-dimentions.Width / 2 - config.AtomDiameter / 2 - a.X) / a.Dx;
+            double t1x = (dimentions.Width / 2 + config.Simulation.AtomDiameter / 2 - a.X) / a.Dx;
+            double t2x = (-dimentions.Width / 2 - config.Simulation.AtomDiameter / 2 - a.X) / a.Dx;
 
-            double t1y = (dimentions.Height / 2 + config.AtomDiameter / 2 - a.Y) / a.Dy;
-            double t2y = (-dimentions.Height / 2 - config.AtomDiameter / 2 - a.Y) / a.Dy;
+            double t1y = (dimentions.Height / 2 + config.Simulation.AtomDiameter / 2 - a.Y) / a.Dy;
+            double t2y = (-dimentions.Height / 2 - config.Simulation.AtomDiameter / 2 - a.Y) / a.Dy;
 
             CalculateTAndAngleForHorizontalEdges(a.Dx,
                 txmin, txmax, t1y, t2y,
@@ -214,10 +215,10 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
 
         private static bool DoesAtomMovesFromEdge(Config config, double lowestAngle, VelocityState v)
         {
-            return (MathHelper.Equals(lowestAngle, 0, config.ErrorRate) && v.Dx <= 0) ||
-                (MathHelper.Equals(lowestAngle, Math.PI / 2, config.ErrorRate) && v.Dy <= 0) ||
-                (MathHelper.Equals(lowestAngle, -Math.PI / 2, config.ErrorRate) && v.Dy >= 0) ||
-                (MathHelper.Equals(lowestAngle, Math.PI, config.ErrorRate) && v.Dx >= 0);
+            return (MathHelper.Equals(lowestAngle, 0, config.Simulation.ErrorRate) && v.Dx <= 0) ||
+                (MathHelper.Equals(lowestAngle, Math.PI / 2, config.Simulation.ErrorRate) && v.Dy <= 0) ||
+                (MathHelper.Equals(lowestAngle, -Math.PI / 2, config.Simulation.ErrorRate) && v.Dy >= 0) ||
+                (MathHelper.Equals(lowestAngle, Math.PI, config.Simulation.ErrorRate) && v.Dx >= 0);
         }
 
         private static void CompareTWithAngle(

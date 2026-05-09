@@ -1,4 +1,7 @@
-﻿namespace GasSimulation.Benchmarks.Benchmarks
+﻿using GasSimulation.Configuration;
+using GasSimulation.Mappers;
+
+namespace GasSimulation.Benchmarks.Benchmarks
 {
     public class BenchmarksBase
     {
@@ -7,7 +10,7 @@
         public BenchmarksBase()
         {
             var configManager = new ConfigManager("BenchmarksConfig.json");
-            _config = configManager.GetConfig();
+            _config = new(configManager.GetSimulationConfig().Map());
         }
     }
 }

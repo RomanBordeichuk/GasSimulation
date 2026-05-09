@@ -1,4 +1,5 @@
-﻿using GasSimulation.GeneralDTOs.Atom;
+﻿using GasSimulation.Configuration;
+using GasSimulation.GeneralDTOs.Atom;
 using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Simulation.DTOs;
 using GasSimulation.Simulation.IterationCalculator.DTOs;
@@ -12,11 +13,11 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
         {
             CollisionState<AtomState, RectState> collistion = new(new(), new(), -1, 0);
 
-            for (int i = 0; i < allStates.Atoms.Length; i++)
+            for (int i = 0; i < allStates.Atoms.Count; i++)
             {
                 var atom1 = allStates.Atoms[i];
 
-                for (int j = 0; j < allStates.Rects.Length; j++)
+                for (int j = 0; j < allStates.Rects.Count; j++)
                 {
                     var rect2 = allStates.Rects[j];
 
@@ -35,7 +36,7 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
 
             if (t == null) return;
 
-            if (MathHelper.Equals(collision.T, -1, config.ErrorRate) || t < collision.T)
+            if (MathHelper.Equals(collision.T, -1, config.Simulation.ErrorRate) || t < collision.T)
                 collision = new(id1, id2, atom1, rect2, t.Value, angle!.Value);
         }
 

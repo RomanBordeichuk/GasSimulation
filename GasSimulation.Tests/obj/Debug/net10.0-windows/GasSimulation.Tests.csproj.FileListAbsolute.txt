@@ -113,3 +113,5 @@ C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Tests
 C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Tests\bin\Debug\net10.0-windows\Microsoft.Extensions.Primitives.dll
 C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Tests\bin\Debug\net10.0-windows\SimulationConfig.json
 C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Tests\bin\Debug\net10.0-windows\TestsConfig.json
+C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Tests\bin\Debug\net10.0-windows\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Tests\bin\Debug\net10.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll

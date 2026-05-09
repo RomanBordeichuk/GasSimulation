@@ -1,0 +1,140 @@
+// Validating benchmarks:
+// ***** BenchmarkRunner: Start   *****
+// ***** Found 2 benchmark(s) in total *****
+// ***** Building 1 exe(s) in Parallel: Start   *****
+// start dotnet  restore --nodeReuse:false /p:UseSharedCompilation=false /p:Deterministic=true /p:Optimize=true /p:ArtifactsPath="C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1/" /p:OutDir="C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\bin\Release\net10.0-Windows7.0/" /p:OutputPath="C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\bin\Release\net10.0-Windows7.0/" /p:PublishDir="C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\publish/" in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1
+// command took 3.08 sec and exited with 0
+// start dotnet  build -c Release --no-restore --nodeReuse:false /p:UseSharedCompilation=false /p:Deterministic=true /p:Optimize=true /p:ArtifactsPath="C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1/" /p:OutDir="C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\bin\Release\net10.0-Windows7.0/" /p:OutputPath="C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\bin\Release\net10.0-Windows7.0/" /p:PublishDir="C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\publish/" --output "C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\bin\Release\net10.0-Windows7.0/" in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1
+// command took 13.29 sec and exited with 0
+// ***** Done, took 00:00:16 (16.45 sec)   *****
+// Found 2 benchmarks:
+//   SimulationBenchmarks.CalculateIteration: DefaultJob [NumAtoms=500]
+//   SimulationBenchmarks.CalculateIteration: DefaultJob [NumAtoms=1000]
+
+Setup power plan (GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c FriendlyName: High performance)
+// **************************
+// Benchmark: SimulationBenchmarks.CalculateIteration: DefaultJob [NumAtoms=500]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet GasSimulation.Benchmarks-1.dll --anonymousPipes 1560 1552 --benchmarkName "GasSimulation.Benchmarks.Benchmarks.SimulationBenchmarks.CalculateIteration(NumAtoms: 500)" --job Default --benchmarkId 0 in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\bin\Release\net10.0-Windows7.0
+// BeforeAnythingElse
+
+System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
+ ---> System.InvalidOperationException: Cannot create instance of type 'GasSimulation.Configuration.ConfigParts.SimulationConfig' because parameter 'ZoomScale' has no matching config. Each parameter in the constructor that does not have a default value must have a corresponding config entry.
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindParameter(ParameterInfo parameter, Type type, IConfiguration config, BinderOptions options)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.CreateInstance(Type type, IConfiguration config, BinderOptions options, ParameterInfo[]& constructorParameters)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindInstance(Type type, BindingPoint bindingPoint, IConfiguration config, BinderOptions options, Boolean isParentCollection)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.Get(IConfiguration configuration, Type type, Action`1 configureOptions)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.Get[T](IConfiguration configuration, Action`1 configureOptions)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.Get[T](IConfiguration configuration)
+   at GasSimulation.Configuration.ConfigManager..ctor(String configFileName) in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation\Configuration\ConfigManager.cs:line 21
+   at GasSimulation.Benchmarks.Benchmarks.BenchmarksBase..ctor() in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\Benchmarks\BenchmarksBase.cs:line 11
+   at GasSimulation.Benchmarks.Benchmarks.SimulationBenchmarks..ctor()
+   at BenchmarkDotNet.Autogenerated.Runnable_0..ctor() in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\GasSimulation.Benchmarks-1.notcs:line 190
+   at BenchmarkDotNet.Autogenerated.Runnable_0.Run(IHost host, String benchmarkName) in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\GasSimulation.Benchmarks-1.notcs:line 138
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+   --- End of inner exception stack trace ---
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
+   at BenchmarkDotNet.Autogenerated.UniqueProgramName.AfterAssemblyLoadingAttached(String[] args) in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\GasSimulation.Benchmarks-1.notcs:line 57
+// AfterAll
+No Workload Results were obtained from the run.
+// Benchmark Process 320060 has exited with code -1.
+
+// ** Remained 1 (50.0%) benchmark(s) to run. Estimated finish 2026-05-07 21:31 (0h 0m from now) **
+Setup power plan (GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c FriendlyName: High performance)
+// **************************
+// Benchmark: SimulationBenchmarks.CalculateIteration: DefaultJob [NumAtoms=1000]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet GasSimulation.Benchmarks-1.dll --anonymousPipes 1184 1460 --benchmarkName "GasSimulation.Benchmarks.Benchmarks.SimulationBenchmarks.CalculateIteration(NumAtoms: 1000)" --job Default --benchmarkId 1 in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\bin\Release\net10.0-Windows7.0
+// BeforeAnythingElse
+
+System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
+ ---> System.InvalidOperationException: Cannot create instance of type 'GasSimulation.Configuration.ConfigParts.SimulationConfig' because parameter 'ZoomScale' has no matching config. Each parameter in the constructor that does not have a default value must have a corresponding config entry.
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindParameter(ParameterInfo parameter, Type type, IConfiguration config, BinderOptions options)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.CreateInstance(Type type, IConfiguration config, BinderOptions options, ParameterInfo[]& constructorParameters)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.BindInstance(Type type, BindingPoint bindingPoint, IConfiguration config, BinderOptions options, Boolean isParentCollection)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.Get(IConfiguration configuration, Type type, Action`1 configureOptions)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.Get[T](IConfiguration configuration, Action`1 configureOptions)
+   at Microsoft.Extensions.Configuration.ConfigurationBinder.Get[T](IConfiguration configuration)
+   at GasSimulation.Configuration.ConfigManager..ctor(String configFileName) in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation\Configuration\ConfigManager.cs:line 21
+   at GasSimulation.Benchmarks.Benchmarks.BenchmarksBase..ctor() in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\Benchmarks\BenchmarksBase.cs:line 11
+   at GasSimulation.Benchmarks.Benchmarks.SimulationBenchmarks..ctor()
+   at BenchmarkDotNet.Autogenerated.Runnable_1..ctor() in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\GasSimulation.Benchmarks-1.notcs:line 382
+   at BenchmarkDotNet.Autogenerated.Runnable_1.Run(IHost host, String benchmarkName) in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\GasSimulation.Benchmarks-1.notcs:line 330
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+   --- End of inner exception stack trace ---
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
+   at BenchmarkDotNet.Autogenerated.UniqueProgramName.AfterAssemblyLoadingAttached(String[] args) in C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation.Benchmarks\bin\Release\net10.0-windows\GasSimulation.Benchmarks-1\GasSimulation.Benchmarks-1.notcs:line 57
+// AfterAll
+No Workload Results were obtained from the run.
+// Benchmark Process 320144 has exited with code -1.
+
+// ** Remained 0 (0.0%) benchmark(s) to run. Estimated finish 2026-05-07 21:31 (0h 0m from now) **
+Successfully reverted power plan (GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c FriendlyName: High performance)
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  BenchmarkDotNet.Artifacts\results\GasSimulation.Benchmarks.Benchmarks.SimulationBenchmarks-report.csv
+  BenchmarkDotNet.Artifacts\results\GasSimulation.Benchmarks.Benchmarks.SimulationBenchmarks-report-github.md
+  BenchmarkDotNet.Artifacts\results\GasSimulation.Benchmarks.Benchmarks.SimulationBenchmarks-report.html
+
+// * Detailed results *
+SimulationBenchmarks.CalculateIteration: DefaultJob [NumAtoms=500]
+Runtime = ; GC = 
+There are not any results runs
+
+SimulationBenchmarks.CalculateIteration: DefaultJob [NumAtoms=1000]
+Runtime = ; GC = 
+There are not any results runs
+
+// * Summary *
+
+BenchmarkDotNet v0.15.8, Windows 11 (10.0.26200.8246/25H2/2025Update/HudsonValley2)
+AMD Ryzen 5 7535HS with Radeon Graphics 3.30GHz, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 10.0.300-preview.0.26177.108
+  [Host] : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3
+
+
+| Method             | NumAtoms | Mean | Error | Rank |
+|------------------- |--------- |-----:|------:|-----:|
+| CalculateIteration | 500      |   NA |    NA |    ? |
+| CalculateIteration | 1000     |   NA |    NA |    ? |
+
+Benchmarks with issues:
+  SimulationBenchmarks.CalculateIteration: DefaultJob [NumAtoms=500]
+  SimulationBenchmarks.CalculateIteration: DefaultJob [NumAtoms=1000]
+
+// * Warnings *
+Environment
+  Summary -> Detected error exit code from one of the benchmarks. It might be caused by following antivirus software:
+        - Malwarebytes (C:\Program Files\Malwarebytes\Anti-Malware\MBAMWsc.exe)
+        - Windows Defender (windowsdefender://)
+        - Norton 360 for Gamers (C:\Program Files\Norton Security\Engine\22.24.3.6\WSCStub.exe)
+Use InProcessEmitToolchain or InProcessNoEmitToolchain to avoid new process creation.
+
+
+// * Legends *
+  NumAtoms : Value of the 'NumAtoms' parameter
+  Mean     : Arithmetic mean of all measurements
+  Error    : Half of 99.9% confidence interval
+  Rank     : Relative position of current benchmark mean among all benchmarks (Arabic style)
+  1 ns     : 1 Nanosecond (0.000000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:00:00 (0.87 sec), executed benchmarks: 2
+
+Global total time: 00:00:19 (19.08 sec), executed benchmarks: 2
+// * Artifacts cleanup *
+Artifacts cleanup is finished

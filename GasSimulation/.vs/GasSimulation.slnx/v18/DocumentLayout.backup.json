@@ -3,20 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulationconfig.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulationconfig.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\initstatetransformer\\sectortransformer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\initstatetransformer\\sectortransformer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\gasgenerator\\fillemptycell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\gasgenerator\\fillemptycell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\gasgenerator\\gasgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\gasgenerator\\gasgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\gasgenerator\\fillrandompartlyoccupiedcell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\gasgenerator\\fillrandompartlyoccupiedcell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\debuggers\\sectortransformervisualdebugger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:debuggers\\sectortransformervisualdebugger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SimulationConfig.json",
-              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\SimulationConfig.json",
-              "RelativeDocumentMoniker": "SimulationConfig.json",
-              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\SimulationConfig.json",
-              "RelativeToolTip": "SimulationConfig.json",
-              "ViewState": "AgIAADAAAAAAAAAAAAAAAD0AAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-05-04T11:20:39.572Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "FillRandomPartlyOccupiedCell.cs",
-              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\FillRandomPartlyOccupiedCell.cs",
-              "RelativeDocumentMoniker": "Simulation\\GasGenerator\\FillRandomPartlyOccupiedCell.cs",
-              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\FillRandomPartlyOccupiedCell.cs",
-              "RelativeToolTip": "Simulation\\GasGenerator\\FillRandomPartlyOccupiedCell.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAIA1wBQAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T11:11:33.267Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "GasGenerator.cs",
-              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\GasGenerator.cs",
-              "RelativeDocumentMoniker": "Simulation\\GasGenerator\\GasGenerator.cs",
-              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\GasGenerator.cs",
-              "RelativeToolTip": "Simulation\\GasGenerator\\GasGenerator.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAAmwEQAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-03T13:01:48.69Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "FillEmptyCell.cs",
-              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\FillEmptyCell.cs",
-              "RelativeDocumentMoniker": "Simulation\\GasGenerator\\FillEmptyCell.cs",
-              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\GasGenerator\\FillEmptyCell.cs",
-              "RelativeToolTip": "Simulation\\GasGenerator\\FillEmptyCell.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAIA7wBgAAAAvAAAAAAAAAA==",
+              "Title": "SectorTransformerVisualDebugger.cs",
+              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Debuggers\\SectorTransformerVisualDebugger.cs",
+              "RelativeDocumentMoniker": "Debuggers\\SectorTransformerVisualDebugger.cs",
+              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Debuggers\\SectorTransformerVisualDebugger.cs",
+              "RelativeToolTip": "Debuggers\\SectorTransformerVisualDebugger.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAkwE0AAABVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-03T14:35:50.843Z",
+              "WhenOpened": "2026-05-09T12:13:58.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SectorTransformer.cs",
+              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\InitStateTransformer\\SectorTransformer.cs",
+              "RelativeDocumentMoniker": "Simulation\\InitStateTransformer\\SectorTransformer.cs",
+              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\InitStateTransformer\\SectorTransformer.cs",
+              "RelativeToolTip": "Simulation\\InitStateTransformer\\SectorTransformer.cs",
+              "ViewState": "AgIAALoAAAAAAAAAAAAIwDIAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T10:30:30.282Z",
               "EditorCaption": ""
             }
           ]

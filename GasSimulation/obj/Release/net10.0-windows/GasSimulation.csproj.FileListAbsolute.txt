@@ -32,3 +32,5 @@ C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation\obj\R
 C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation\obj\Release\net10.0-windows\GasSimulation.genruntimeconfig.cache
 C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation\obj\Release\net10.0-windows\ref\GasSimulation.dll
 C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation\obj\Release\net10.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation\bin\Release\net10.0-windows\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\borde\Desktop\Programming\Backend\WPF\GasSimulation\GasSimulation\bin\Release\net10.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll

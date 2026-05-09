@@ -1,4 +1,7 @@
-﻿namespace GasSimulation.Tests
+﻿using GasSimulation.Configuration;
+using GasSimulation.Mappers;
+
+namespace GasSimulation.Tests
 {
     public class TestsBase
     {
@@ -7,7 +10,7 @@
         protected TestsBase()
         {
             var configManager = new ConfigManager("TestsConfig.json");
-            _config = configManager.GetConfig();
+            _config = new(configManager.GetSimulationConfig().Map());
         }
     }
 }

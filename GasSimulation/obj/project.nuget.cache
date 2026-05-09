@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "lJFILPk3XZg=",
+  "dgSpecHash": "I1hLqBWuOME=",
   "success": true,
   "projectFilePath": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\GasSimulation.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,8 @@
     "C:\\Users\\borde\\.nuget\\packages\\microsoft.extensions.configuration.binder\\10.0.7\\microsoft.extensions.configuration.binder.10.0.7.nupkg.sha512",
     "C:\\Users\\borde\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\10.0.7\\microsoft.extensions.configuration.fileextensions.10.0.7.nupkg.sha512",
     "C:\\Users\\borde\\.nuget\\packages\\microsoft.extensions.configuration.json\\10.0.7\\microsoft.extensions.configuration.json.10.0.7.nupkg.sha512",
+    "C:\\Users\\borde\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\10.0.7\\microsoft.extensions.dependencyinjection.10.0.7.nupkg.sha512",
+    "C:\\Users\\borde\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.7\\microsoft.extensions.dependencyinjection.abstractions.10.0.7.nupkg.sha512",
     "C:\\Users\\borde\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\10.0.7\\microsoft.extensions.fileproviders.abstractions.10.0.7.nupkg.sha512",
     "C:\\Users\\borde\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\10.0.7\\microsoft.extensions.fileproviders.physical.10.0.7.nupkg.sha512",
     "C:\\Users\\borde\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\10.0.7\\microsoft.extensions.filesystemglobbing.10.0.7.nupkg.sha512",

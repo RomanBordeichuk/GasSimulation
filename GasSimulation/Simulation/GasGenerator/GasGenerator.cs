@@ -1,27 +1,43 @@
-﻿using GasSimulation.Debuggers;
+﻿using GasSimulation.Configuration;
+using GasSimulation.Debuggers;
 using GasSimulation.Exceptions;
 using GasSimulation.GeneralDTOs;
 using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Simulation.GasGenerator.DTOs;
 using GasSimulation.Simulation.InitStateTransformer.DTOs;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
-using GasSimulation.Simulation.Mappers;
 
 namespace GasSimulation.Simulation.GasGenerator
 {
-    public static class GasGenerator
+    public class GasGenerator
     {
-        public static async Task<List<AtomConfigInitState>>
-            Generate(Config config, RectState area, int numAtoms, double speed)
+        private readonly Config _config;
+        private readonly RandomCellFiller _randomCellFiller;
+        private readonly AtomGenerator _atomGenerator;
+        private readonly GasGeneratorVisualDebugger _debugger;
+
+        public GasGenerator(Config config, 
+            RandomCellFiller randomCellFiller,
+            AtomGenerator atomGenerator,
+            GasGeneratorVisualDebugger debugger)
+        {
+            _config = config;
+            _randomCellFiller = randomCellFiller;
+            _atomGenerator = atomGenerator;
+            _debugger = debugger;
+        }
+
+        public async ValueTask<List<AtomConfigInitState>>
+            Generate(RectState area, int numAtoms, double speed)
         {
             area = new(area.Pos, area.Dimentions, area.Angle * Math.PI / 180);
 
-            double cellSize = config.AtomDiameter / config.Sqrt2;
+            double cellSize = _config.Simulation.AtomDiameter / _config.Simulation.Sqrt2;
 
-            GasGeneratorVDHepler.SetParam<double>("CellSize", cellSize);
+            _debugger.SetParam<double>("CellSize", cellSize);
 
-            int numCellsX = (int)((area.Width - config.AtomDiameter) / cellSize);
-            int numCellsY = (int)((area.Height - config.AtomDiameter) / cellSize);
+            int numCellsX = (int)((area.Width - _config.Simulation.AtomDiameter) / cellSize);
+            int numCellsY = (int)((area.Height - _config.Simulation.AtomDiameter) / cellSize);
 
             CellsArray cellsArray = new(numCellsX, numCellsY);
 
@@ -31,25 +47,22 @@ namespace GasSimulation.Simulation.GasGenerator
             double translateX = ((double)numCellsX - 1) * cellSize / 2;
             double translateY = ((double)numCellsY - 1) * cellSize / 2;
 
-            for (int i = 0; i < numCellsX; i++)
+            for (int i = 0; i < numCellsY; i++)
             {
-                for (int j = 0; j < numCellsY; j++)
+                for (int j = 0; j < numCellsX; j++)
                 {
                     cellsArray.Array[i * cellsArray.Width + j] = new(
-                        new(i * cellSize - translateX, j * cellSize - translateY));
+                        new(j * cellSize - translateX, i * cellSize - translateY));
                     freeCellsIds.Add((i, j));
                 }
             }
 
-            GasGeneratorVDHepler.Initialize(config);
-            GasGeneratorVDHepler.SetParam<RectState>("Area", area);
-            GasGeneratorVDHepler.SetParam<TranslateFieldDelegate>("TranslateFieldMethod", TranslateField);
+            _debugger.SetParam<RectState>("Area", area);
+            _debugger.SetParam<TranslateFieldDelegate>("TranslateFieldMethod", TranslateField);
 
-            await VisualDebugger.Stop();
-
-            GasGeneratorVDHepler.CreateSector(area);
-
-            await VisualDebugger.Stop();
+            await _debugger.Stop();
+            _debugger.CreateSector();
+            await _debugger.Stop();
 
             List<AtomConfigInitState> atoms = new();
 
@@ -57,36 +70,28 @@ namespace GasSimulation.Simulation.GasGenerator
             {
                 if (freeCellsIds.Count != 0)
                 {
-                    PosState pos = FillRandomFreeCell.Fill(config, cellsArray, 
+                    PosState pos = _randomCellFiller.FillFreeCell(cellsArray, 
                         freeCellsIds, partlyOccupiedCellsIds);
 
-                    await VisualDebugger.Stop();
-
-                    atoms.Add(AtomGenerator.Generate(config, pos, speed));
+                    atoms.Add(_atomGenerator.Generate(pos, speed));
                 }
                 else if (partlyOccupiedCellsIds.Count != 0)
                 {
-                    PosState pos = FillRandomPartlyOccupiedCell.Fill(config, cellsArray,
+                    PosState pos = _randomCellFiller.FillPartlyOccupiedCell(cellsArray,
                         partlyOccupiedCellsIds);
 
-                    atoms.Add(AtomGenerator.Generate(config, pos, speed));
+                    atoms.Add(_atomGenerator.Generate(pos, speed));
                 }
                 else throw new NotEnoughPlaceException();
 
-                var lastAtom = atoms[atoms.Count - 1];
+                _debugger.CreateAtom(atoms[atoms.Count - 1]);
 
-                VisualDebugger.Draw("Atoms", new AtomConfigInitState(
-                    TranslateField(ref area, lastAtom.Pos), lastAtom.Speed, 
-                    lastAtom.Angle).MapToState(config), config.ElemBrush);
-
-                await VisualDebugger.Stop();
+                await _debugger.Stop();
             }
 
-            VisualDebugger.ClearGroup("Atoms");
-            VisualDebugger.ClearGroup("Rects");
-            VisualDebugger.ClearGroup("Sectors");
+            _debugger.ClearAll();
 
-            await VisualDebugger.Stop();
+            await _debugger.Stop();
 
             for (int i = 0; i < atoms.Count; i++)
             {

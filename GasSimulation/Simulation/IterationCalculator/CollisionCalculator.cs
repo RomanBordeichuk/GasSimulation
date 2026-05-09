@@ -1,4 +1,5 @@
-﻿using GasSimulation.GeneralDTOs;
+﻿using GasSimulation.Configuration;
+using GasSimulation.GeneralDTOs;
 using GasSimulation.GeneralDTOs.Atom;
 using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
@@ -11,7 +12,7 @@ namespace GasSimulation.Simulation.IterationCalculator
             AtomState atomState1, AtomState atomState2, double remT)
         {
             return CalculateAtomTAndAngle(config, atomState1, atomState2, remT,
-                config.AtomDiameter / 2, config.AtomDiameter / 2);
+                config.Simulation.AtomDiameter / 2, config.Simulation.AtomDiameter / 2);
         }
 
         public static (double? t, double? angle) CalculateAtomTAndAngle(Config config,

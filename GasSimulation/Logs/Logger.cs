@@ -1,8 +1,9 @@
 ﻿using GasSimulation.GeneralDTOs.Atom;
-using GasSimulation.GeneralDTOs.Interfaces;
 using GasSimulation.GeneralDTOs.Rect;
+using GasSimulation.Simulation.DTOs;
 using GasSimulation.Simulation.InitStateTransformer.DTOs;
 using System.Diagnostics;
+using System.Windows;
 
 namespace GasSimulation.Logs
 {
@@ -31,23 +32,25 @@ namespace GasSimulation.Logs
         }
 
         [Conditional("DEBUG")]
-        public static void LogData(this List<IElemState> elems)
+        public static void LogData(this AllStates elems)
         {
             Log("Iteration data");
 
-            for (int i = 0; i < elems.Count; i++)
+            for (int i = 0; i < elems.Atoms.Count; i++)
             {
-                if (elems[i] is AtomState atom)
-                {
-                    Log($"Atom {i}");
-                    Log($"x: {atom.X}, y: {atom.Y}, dx: {atom.Dx}, dy: {atom.Dy}");
-                }
-                else if (elems[i] is RectState rect)
-                {
-                    Log($"Rect {i}");
-                    Log($"x: {rect.X}, y: {rect.Y}, width: {rect.Width}, height: {rect.Height}, " +
-                        $"angle: {rect.Angle}");
-                }
+                var atom = elems.Atoms[i];
+
+                Log($"Atom {i}");
+                Log($"x: {atom.X}, y: {atom.Y}, dx: {atom.Dx}, dy: {atom.Dy}");
+            }
+
+            for (int i = 0; i < elems.Rects.Count; i++)
+            {
+                var rect = elems.Rects[i];
+
+                Log($"Rect {i}");
+                Log($"x: {rect.X}, y: {rect.Y}, width: {rect.Width}, height: {rect.Height}, " +
+                    $"angle: {rect.Angle}");
             }
 
             Log("---------------------");

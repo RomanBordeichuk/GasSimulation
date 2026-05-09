@@ -64,8 +64,8 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
             }
             else
             {
-                Assert.Equal(expT.Value, t!.Value, _config.Precision);
-                Assert.Equal(expAngle!.Value, angle!.Value, _config.Precision);
+                Assert.Equal(expT.Value, t!.Value, _config.Simulation.Precision);
+                Assert.Equal(expAngle!.Value, angle!.Value, _config.Simulation.Precision);
             }
         }
 
@@ -114,10 +114,10 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
 
             //Assert
 
-            Assert.Equal(expV1x, v1.Dx, _config.Precision);
-            Assert.Equal(expV1y, v1.Dy, _config.Precision);
-            Assert.Equal(expV2x, v2.Dx, _config.Precision);
-            Assert.Equal(expV2y, v2.Dy, _config.Precision);
+            Assert.Equal(expV1x, v1.Dx, _config.Simulation.Precision);
+            Assert.Equal(expV1y, v1.Dy, _config.Simulation.Precision);
+            Assert.Equal(expV2x, v2.Dx, _config.Simulation.Precision);
+            Assert.Equal(expV2y, v2.Dy, _config.Simulation.Precision);
         }
 
         [Theory]
@@ -220,8 +220,8 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
             }
             else
             {
-                Assert.Equal(expT.Value, t!.Value, _config.Precision);
-                Assert.Equal(expAngle!.Value, angle!.Value, _config.Precision);
+                Assert.Equal(expT.Value, t!.Value, _config.Simulation.Precision);
+                Assert.Equal(expAngle!.Value, angle!.Value, _config.Simulation.Precision);
             }
         }
 
@@ -273,8 +273,8 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
 
             //Assert
 
-            Assert.Equal(expDx, v.Dx, _config.Precision);
-            Assert.Equal(expDy, v.Dy, _config.Precision);
+            Assert.Equal(expDx, v.Dx, _config.Simulation.Precision);
+            Assert.Equal(expDy, v.Dy, _config.Simulation.Precision);
         }
     }
 }

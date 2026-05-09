@@ -1,4 +1,5 @@
-﻿using GasSimulation.GeneralDTOs;
+﻿using GasSimulation.Configuration;
+using GasSimulation.GeneralDTOs;
 using GasSimulation.GeneralDTOs.Atom;
 
 namespace GasSimulation.Simulation.IterationCalculator.Helpers
@@ -55,18 +56,26 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
 
         public static (double dx1, double dx2) RecalculateMomentum(Config config, double dx1, double dx2)
         {
-            double newDx1 = (dx1 + dx2 - config.Restitution * (dx1 - dx2)) / 2;
-            double newDx2 = (dx1 + dx2 + config.Restitution * (dx1 - dx2)) / 2;
+            double newDx1 = (dx1 + dx2 - config.Simulation.Restitution * (dx1 - dx2)) / 2;
+            double newDx2 = (dx1 + dx2 + config.Simulation.Restitution * (dx1 - dx2)) / 2;
 
             return (newDx1, newDx2);
         }
 
-        public static (double dx, double dy) DecomposeVelocity(double speed, double angle)
+        public static VelocityState DecomposeVector(double speed, double angle)
         {
             double dx = speed * Math.Cos(angle * Math.PI / 180);
             double dy = speed * Math.Sin(angle * Math.PI / 180);
 
-            return (dx, dy);
+            return new (dx, dy);
+        }
+
+        public static (double speed, double angle) DecomposeVelocity(VelocityState v)
+        {
+            double speed = Math.Sqrt(v.Dx * v.Dx + v.Dy * v.Dy); 
+            double angle = Math.Atan2(v.Dy, v.Dx);
+
+            return (speed, angle);
         }
 
         public static double CalculateDistance(PosState pos1, PosState pos2)

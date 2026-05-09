@@ -1,4 +1,5 @@
-﻿using GasSimulation.GeneralDTOs.Atom;
+﻿using GasSimulation.Configuration;
+using GasSimulation.GeneralDTOs.Atom;
 using GasSimulation.Simulation.DTOs;
 using GasSimulation.Simulation.IterationCalculator.DTOs;
 
@@ -11,11 +12,11 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
         {
             CollisionState<AtomState, AtomState> collistion = new(new(), new(), -1, 0);
 
-            for (int i = 0; i < allStates.Atoms.Length; i++)
+            for (int i = 0; i < allStates.Atoms.Count; i++)
             {
                 var atom1 = allStates.Atoms[i];
 
-                for (int j = i + 1; j < allStates.Atoms.Length; j++)
+                for (int j = i + 1; j < allStates.Atoms.Count; j++)
                 {
                     var atom2 = allStates.Atoms[j];
 
@@ -36,14 +37,16 @@ namespace GasSimulation.Simulation.IterationCalculator.Helpers
 
             if (t == null) return;
 
-            if (MathHelper.Equals(collision.T, -1, config.ErrorRate) || t < collision.T)
+            if (MathHelper.Equals(collision.T, -1, config.Simulation.ErrorRate) || t < collision.T)
                 collision = new(id1, id2, atom1, atom2, t.Value, angle!.Value);
         }
 
         private static bool AreElemsClose(Config config, AtomState atom1, AtomState atom2)
         {
-            return Math.Abs(atom1.X - atom2.Pos.X) <= Math.Abs(atom1.Dx - atom2.Velocity.Dx) + config.AtomDiameter
-                && Math.Abs(atom1.Y - atom2.Pos.Y) <= Math.Abs(atom1.Dy - atom2.Velocity.Dy) + config.AtomDiameter;
+            return Math.Abs(atom1.X - atom2.Pos.X) <= Math.Abs(atom1.Dx - atom2.Velocity.Dx) + 
+                config.Simulation.AtomDiameter
+                && Math.Abs(atom1.Y - atom2.Pos.Y) <= Math.Abs(atom1.Dy - atom2.Velocity.Dy) + 
+                config.Simulation.AtomDiameter;
         }
 
         private static (double? t, double? angle) CalculateNewTAndAngleAtom(Config config,

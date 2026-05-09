@@ -1,17 +1,33 @@
 {
-  "SimulationConstants": {
+  "SimulationConfig": {
     "FPS": 20,
     "SpeedMult": 1,
     "StartPosX": 200,
     "StartPosY": 100,
+    "ZoomScale": 1.03,
     "Restitution": 1,
     "ErrorRate": 1e-10,
     "AtomDiameter": 10,
-    "PasteAtomAttempts": 20,
-    "AtomColorHex": "#FFFFFF"
+    "SectorSizeMult": 10,
+    "PasteAtomAttempts": 20
   },
 
-  "EnableLogs": false,
+  "ColorsConfig": {
+    "Elem": [ 255, 255, 255, 255 ],
+    "GhostElem": [ 120, 255, 255, 255 ],
+    "OccupiedCell": [ 150, 255, 134, 107 ],
+    "PartlyOccupiedCell": [ 150, 255, 213, 97 ],
+    "Sector": [ 150, 117, 255, 239 ],
+    "Vector": [ 255, 252, 57, 3 ]
+  },
+
+  "DebugConfig": {
+    // "GasGenerator"
+    // "IterationCalculator"
+    // "SectorCalculator"
+    "DebugModules": [ "" ],
+    "DebugSteps": 20
+  },
 
   "InitStates": {
     "Active": [ 3, 4 ],
@@ -28,7 +44,7 @@
           [ 440, 550, 120, -120 ]
         ],
         "Rects": [
-          [ 350, 300, 20, 30 ]
+          [ 350, 300, 150, 20, 30 ]
         ]
       },
       { // Variant 1
@@ -57,8 +73,8 @@
       { // Variant 3
         "Gas": [
           {
-            "Area": [ 200, 250, 500, 500, 0 ],
-            "NumAtoms": 1200,
+            "Area": [ 250, 300, 600, 300, 0 ],
+            "NumAtoms": 100,
             "AtomSpeed": 100
           }
         ],
@@ -69,11 +85,22 @@
         "Gas": [],
         "Atoms": [],
         "Rects": [
-          [ -100, 250, 600, 15, 90 ],
-          [ 700, 250, 600, 15, 90 ],
+          [ -100, 300, 700, 15, 90 ],
+          [ 700, 300, 700, 15, 90 ],
           [ 300, -50, 800, 15, 0 ],
-          [ 300, 550, 800, 15, 0 ]
+          [ 300, 650, 800, 15, 0 ]
         ]
+      },
+      { // Variant 5
+        "Gas": [
+          {
+            "Area": [ 200, 100, 400, 300, 15 ],
+            "NumAtoms": 30,
+            "AtomSpeed": 100
+          }
+        ],
+        "Atoms": [],
+        "Rects": []
       }
     ]
   }

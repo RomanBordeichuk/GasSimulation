@@ -1,34 +1,49 @@
-﻿using GasSimulation.GeneralDTOs.Atom;
+﻿using GasSimulation.Configuration;
+using GasSimulation.GeneralDTOs.Atom;
 using GasSimulation.GeneralDTOs.Rect;
+using GasSimulation.Mappers;
 using GasSimulation.Simulation.DTOs;
 using GasSimulation.Simulation.InitStateTransformer.DTOs;
-using GasSimulation.Simulation.Mappers;
 
 namespace GasSimulation.Simulation.InitStateTransformer
 {
-    public static class ConfigInitStateTransformer
+    public class ConfigInitStateTransformer
     {
-        public static async Task<AllStates> Transform(Config config, List<ConfigInitState> configInitStates)
+        private readonly Config _config;
+        private readonly GasGenerator.GasGenerator _gasGenerator;
+        private readonly SectorTransformer _sectorTransformer;
+
+        public ConfigInitStateTransformer(Config config, GasGenerator.GasGenerator gasGenerator, 
+            SectorTransformer sectorTransformer)
+        {
+            _config = config;
+            _gasGenerator = gasGenerator;
+            _sectorTransformer = sectorTransformer;
+        }
+
+        public async ValueTask<SectorStates> Transform(List<ConfigInitState> configInitStates)
         {
             List<AtomState> atoms = new();
             List<RectState> rects = new();
 
             foreach (var configInitState in configInitStates)
             {
-                var atomInitStates = await InitializeGas(config, configInitState.Gas);
+                var atomInitStates = await InitializeGas(configInitState.Gas);
                 atomInitStates.AddRange(InitializeAtoms(configInitState.Atoms));
 
                 var rectInitStates = InitializeRects(configInitState.Rects);
 
-                atoms.AddRange(atomInitStates.MapToStates(config));
-                rects.AddRange(rectInitStates.MapToStates(config));
+                atoms.AddRange(atomInitStates.MapToStates(_config));
+                rects.AddRange(rectInitStates.MapToStates(_config));
             }
 
-            return new(atoms, rects);
+            var allStates = new AllStates(atoms, rects);
+
+            return await _sectorTransformer.Transform(allStates);
         }
 
-        private static async Task<List<AtomConfigInitState>> InitializeGas(
-            Config config, List<GasConfigInitState> rawGasList)
+        private async ValueTask<List<AtomConfigInitState>> InitializeGas(
+            List<GasConfigInitState> rawGasList)
         {
             List<AtomConfigInitState> atomInitStates = new();
 
@@ -39,8 +54,8 @@ namespace GasSimulation.Simulation.InitStateTransformer
                     var rawArea = rawGas.Area;
                     RectState area = new(rawArea[0], rawArea[1], rawArea[2], rawArea[3], rawArea[4]);
 
-                    atomInitStates.AddRange(await GasGenerator.GasGenerator.Generate(
-                        config, area, rawGas.NumAtoms, rawGas.AtomSpeed));
+                    atomInitStates.AddRange(await _gasGenerator.Generate(
+                        area, rawGas.NumAtoms, rawGas.AtomSpeed));
                 }
             }
 

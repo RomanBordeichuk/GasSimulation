@@ -6,9 +6,14 @@
         xmlns:local="clr-namespace:GasSimulation.UIRendering"
         mc:Ignorable="d"
         Title="GasSimulation" Height="450" Width="800" Background="Black"
-        Loaded="Window_Loaded" KeyDown="Window_KeyDown">
+        Loaded="Window_Loaded" KeyDown="Window_KeyDown"
+        MouseWheel="Window_Scroll" MouseMove="Window_MouseMove">
     <Grid x:Name="MainContainer">
-        <local:SimulationField x:Name="SimulationField" />
+        <Grid.RenderTransform>
+            <MatrixTransform x:Name="ScaleMatrix" />
+        </Grid.RenderTransform>
+        <local:SimulationField 
+            x:Name="SimulationField" />
         <Canvas x:Name="DebugCanvas" />
     </Grid>
 </Window>

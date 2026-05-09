@@ -13,7 +13,7 @@ namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
         {
             //Act
 
-            bool res = MathHelper.Equals(a, b, _config.ErrorRate);
+            bool res = MathHelper.Equals(a, b, _config.Simulation.ErrorRate);
 
             //Assert
 
@@ -45,7 +45,7 @@ namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
 
             //Assert
 
-            Assert.Equal(expAngle, angle, _config.Precision);
+            Assert.Equal(expAngle, angle, _config.Simulation.Precision);
         }
 
         [Theory]
@@ -69,8 +69,8 @@ namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
 
             //Assert
 
-            Assert.Equal(expDx, newV.Dx, _config.Precision);
-            Assert.Equal(expDy, newV.Dy, _config.Precision);
+            Assert.Equal(expDx, newV.Dx, _config.Simulation.Precision);
+            Assert.Equal(expDy, newV.Dy, _config.Simulation.Precision);
         }
 
         [Theory]
@@ -95,8 +95,8 @@ namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
 
             //Assert
 
-            Assert.Equal(expX, newPos.X, _config.Precision);
-            Assert.Equal(expY, newPos.Y, _config.Precision);
+            Assert.Equal(expX, newPos.X, _config.Simulation.Precision);
+            Assert.Equal(expY, newPos.Y, _config.Simulation.Precision);
         }
 
         [Theory]
@@ -117,8 +117,8 @@ namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
 
             //Arrange
 
-            Assert.Equal(expDx1, newDx1, _config.Precision);
-            Assert.Equal(expDx2, newDx2, _config.Precision);
+            Assert.Equal(expDx1, newDx1, _config.Simulation.Precision);
+            Assert.Equal(expDx2, newDx2, _config.Simulation.Precision);
         }
 
         [Theory]
@@ -155,12 +155,12 @@ namespace GasSimulation.Tests.Unit.IterationCalculator.Helpers
         {
             //Act
 
-            (double dx, double dy) = MathHelper.DecomposeVelocity(speed, angle);
+            var v = MathHelper.DecomposeVector(speed, angle);
 
             //Assert
 
-            Assert.Equal(expDx, dx, _config.Precision);
-            Assert.Equal(expDy, dy, _config.Precision);
+            Assert.Equal(expDx, v.Dx, _config.Simulation.Precision);
+            Assert.Equal(expDy, v.Dy, _config.Simulation.Precision);
         }
     }
 }

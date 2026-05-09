@@ -1,55 +1,54 @@
-﻿using GasSimulation.Debuggers;
+﻿using GasSimulation.Configuration;
 using GasSimulation.Logs;
-using System.Windows.Threading;
 
 namespace GasSimulation.Simulation
 {
-    static class SimulationTimer
+    public class SimulationTimer
     {
-        private static Config _config = null!;
-        private static DispatcherTimer _timer = null!;
-        private static bool _paused = true;
+        private readonly Config _config;
+        private readonly Simulation _simulation;
 
-        static public void Initialize(Config config)
+        private PeriodicTimer _timer = null!;
+        private int _iteration = 0;
+        private bool _paused = true;
+
+        public SimulationTimer(Config config, Simulation simulation)
         {
             _config = config;
-
-            _timer = new(DispatcherPriority.Render);
-
-            int iteration = 0;
-
-            _timer.Interval = TimeSpan.FromMilliseconds(1000 / config.FPS);
-            _timer.Tick += async (s, e) =>
-            {
-                Logger.Log($"Running... Iteration: {iteration}");
-
-                await VisualDebugger.Stop();
-
-                Simulation.Run();
-
-                iteration++;
-            };
+            _simulation = simulation;
         }
 
-        static public void Toggle()
+        public void Toggle()
         {
             if (_paused)
             {
                 _paused = false;
                 Logger.Log("Starting...");
-                _timer.Start();
+                StartTimer();
             }
             else
             {
                 _paused = true;
                 Logger.Log("Stopping...");
-                _timer.Stop();
+                _timer.Dispose();
             }
         }
 
-        static public void DebugStepNext()
+        private void StartTimer()
         {
-            _config.DebuggerWaitHandler.TrySetResult();
+            Task.Run(async () =>
+            {
+                _timer = new(TimeSpan.FromMilliseconds(1000 / _config.Simulation.FPS));
+
+                while (await _timer.WaitForNextTickAsync())
+                {
+                    Logger.Log($"Running... Iteration: {_iteration}");
+
+                    await _simulation.Run();
+
+                    _iteration++;
+                }
+            });
         }
     }
 }

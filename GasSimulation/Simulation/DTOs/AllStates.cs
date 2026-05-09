@@ -5,13 +5,13 @@ namespace GasSimulation.Simulation.DTOs
 {
     public struct AllStates
     {
-        public AtomState[] Atoms { get; }
-        public RectState[] Rects { get; }
+        public List<AtomState> Atoms { get; }
+        public List<RectState> Rects { get; }
 
         public AllStates(IEnumerable<AtomState> atoms, IEnumerable<RectState> rects)
         {
-            Atoms = atoms.ToArray();
-            Rects = rects.ToArray();
+            Atoms = atoms.ToList();
+            Rects = rects.ToList();
         }
     }
 }
