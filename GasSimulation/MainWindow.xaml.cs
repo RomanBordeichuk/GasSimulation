@@ -1,6 +1,7 @@
 ﻿using GasSimulation.Builders;
 using GasSimulation.Configuration;
 using GasSimulation.Debuggers;
+using GasSimulation.GeneralDTOs.Atom;
 using GasSimulation.Simulation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
@@ -24,6 +25,21 @@ namespace GasSimulation
             InitializeComponent();
         }
 
+        public void FocusAtom(AtomState atom)
+        {
+            var matrix = ScaleMatrix.Matrix;
+
+            double zoom = matrix.M11;
+
+            double centerX = MainContainer.ActualWidth / 2;
+            double centerY = MainContainer.ActualHeight / 2;
+
+            matrix.OffsetX = centerX - atom.X * zoom;
+            matrix.OffsetY = centerY - atom.Y * zoom;
+
+            ScaleMatrix.Matrix = matrix;
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var configManager = new ConfigManager("SimulationConfig.json");
@@ -41,7 +57,7 @@ namespace GasSimulation
             var rendererBuilder = services.GetRequiredService<UIRendererBuilder>();
             var iterationCalculatorDebugger = services.GetRequiredService<IterationCalculatorVisualDebugger>();
 
-            var renderer = rendererBuilder.Build(_simulation);
+            var renderer = rendererBuilder.Build(_simulation, FocusAtom);
             renderer.SubscribeOnRendering(iterationCalculatorDebugger.IsDisabled());
         }
 
@@ -49,7 +65,8 @@ namespace GasSimulation
         {
             bool isCtrlPressed = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
 
-            switch (e.Key){
+            switch (e.Key)
+            {
                 case Key.Space:
                     _simulation.Toggle();
 
@@ -60,6 +77,10 @@ namespace GasSimulation
                     else _debugger.StepNext();
 
                     break;
+
+                case Key.Enter:
+                    _simulation.FocusRandomAtom();
+                    break;
             }
 
             e.Handled = true;
@@ -68,7 +89,7 @@ namespace GasSimulation
         private void Window_Scroll(object sender, MouseWheelEventArgs e)
         {
             var pos = e.GetPosition(this.MainContainer);
-            double zoom = e.Delta > 0 ? _config.Simulation.ZoomScale 
+            double zoom = e.Delta > 0 ? _config.Simulation.ZoomScale
                 : 2 - _config.Simulation.ZoomScale;
 
             var matrix = this.ScaleMatrix.Matrix;
@@ -83,6 +104,7 @@ namespace GasSimulation
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var pos = e.GetPosition(this);
+
                 var delta = pos - _lastMousePos;
                 var matrix = this.ScaleMatrix.Matrix;
 

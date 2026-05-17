@@ -1,4 +1,5 @@
 ﻿using GasSimulation.Configuration;
+using GasSimulation.GeneralDTOs.Atom;
 using GasSimulation.Simulation.DTOs;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
 using System.Windows;
@@ -15,41 +16,47 @@ namespace GasSimulation.UIRendering
             AddVisualChild(_visual);
         }
 
-        public void RenderFrame(Config config, AllStates allStates)
+        public void RenderFrame(Config config, AllStates allStates, Action<AtomState> focusAtom)
         {
-            using (DrawingContext context = _visual.RenderOpen())
+            using DrawingContext context = _visual.RenderOpen();
+
+            context.DrawRectangle(config.Brushes!.Black, null,
+                new Rect(0, 0, ActualWidth, ActualHeight));
+
+            var atomPoint = new Point();
+            var rectPoint = new Rect();
+
+            foreach (var atom in allStates.Atoms)
             {
-                context.DrawRectangle(config.Brushes!.Black, null, 
-                    new Rect(0, 0, ActualWidth, ActualHeight));
+                atomPoint.X = atom.X;
+                atomPoint.Y = atom.Y;
 
-                var atomPoint = new Point();
-                var rectPoint = new Rect();
+                context.DrawEllipse(config.Brushes.Elem, null, atomPoint,
+                    config.Simulation.AtomDiameter / 2, config.Simulation.AtomDiameter / 2);
+            }
 
-                foreach (var atom in allStates.Atoms)
-                {
-                    atomPoint.X = atom.X;
-                    atomPoint.Y = atom.Y;
+            foreach (var rect in allStates.Rects)
+            {
+                rectPoint.X = rect.X - rect.Width / 2;
+                rectPoint.Y = rect.Y - rect.Height / 2;
+                rectPoint.Width = rect.Width;
+                rectPoint.Height = rect.Height;
 
-                    context.DrawEllipse(config.Brushes.Elem, null, atomPoint,
-                        config.Simulation.AtomDiameter / 2, config.Simulation.AtomDiameter / 2);
-                }
+                context.PushTransform(new RotateTransform(MathHelper.TransformAngleToDEG(rect.Angle),
+                    rect.X, rect.Y));
 
-                foreach (var rect in allStates.Rects)
-                {
-                    rectPoint.X = rect.X - rect.Width / 2;
-                    rectPoint.Y = rect.Y - rect.Height / 2;
-                    rectPoint.Width = rect.Width;
-                    rectPoint.Height = rect.Height;
+                context.DrawRectangle(config.Brushes.Elem, null, rectPoint);
 
-                    context.PushTransform(new RotateTransform(MathHelper.TransformAngleToDEG(rect.Angle),
-                        rect.X, rect.Y));
+                context.Pop();
+            }
 
-                    context.DrawRectangle(config.Brushes.Elem, null, rectPoint);
-
-                    context.Pop();
-                }
+            if (allStates.SelectedAtom.HasValue)
+            {
+                Console.WriteLine("Update selected atom");
+                focusAtom.Invoke(allStates.Atoms[allStates.SelectedAtom.Value]);
             }
         }
+
 
         protected override int VisualChildrenCount => 1;
         protected override Visual GetVisualChild(int index) => _visual;
