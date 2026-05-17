@@ -1,7 +1,7 @@
 ﻿using GasSimulation.Configuration;
-using GasSimulation.Simulation.DTOs;
 using GasSimulation.Simulation.IterationCalculator;
-using GasSimulation.UIRendering;
+using GasSimulation.Transformers.ConfigInitStateTransformer;
+using GasSimulation.Transformers.ConfigInitStateTransformer.DTOs;
 
 namespace GasSimulation.Builders
 {
@@ -9,19 +9,23 @@ namespace GasSimulation.Builders
     {
         private readonly Config _config;
         private readonly IterationCalculator _iterationCalculator;
-        private readonly SimulationField _field;
+        private readonly ConfigInitStateTransformer _configInitStateTransformer;
+        private readonly ManualResetEventSlim _coreResetEvent;
 
-        public SimulationBuilder(Config config, IterationCalculator 
-            iterationCalculator, SimulationField field)
+        public SimulationBuilder(Config config, IterationCalculator iterationCalculator,
+            ConfigInitStateTransformer configInitStateTransformer, 
+            ManualResetEventSlim coreResetEvent)
         {
             _config = config;
             _iterationCalculator = iterationCalculator;
-            _field = field;
+            _configInitStateTransformer = configInitStateTransformer;
+            _coreResetEvent = coreResetEvent;
         }
 
-        public Simulation.Simulation Build(SectorStates sectorStates, bool renderEnabled)
+        public Simulation.SimulationCore Build(List<ConfigInitState> rawInitState)
         {
-            return new(_config, _iterationCalculator, _field, sectorStates, renderEnabled);
+            return new(_config, _iterationCalculator, 
+                _configInitStateTransformer, _coreResetEvent, rawInitState);
         }
     }
 }

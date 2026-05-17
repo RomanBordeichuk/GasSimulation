@@ -10,14 +10,16 @@ namespace GasSimulation.Debuggers.DTOs
         public double Border { get; }
         public SolidColorBrush Brush { get; }
         public int? Zindex { get; }
+        public string GroupName { get; }
 
-        public DrawHollowCommand(IElemState elem, 
-            double bodrer, SolidColorBrush brush, int? zindex)
+        public DrawHollowCommand(IElemState elem, double bodrer, SolidColorBrush brush, 
+            int? zindex, string groupName)
         {
             Elem = elem;
             Border = bodrer;
             Brush = brush;
             Zindex = zindex;
+            GroupName = groupName;
         }
     }
 }

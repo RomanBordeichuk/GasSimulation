@@ -1,7 +1,7 @@
 ﻿using GasSimulation.GeneralDTOs.Atom;
 using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Simulation.DTOs;
-using GasSimulation.Simulation.InitStateTransformer.DTOs;
+using GasSimulation.Transformers.ConfigInitStateTransformer.DTOs;
 using System.Diagnostics;
 using System.Windows;
 
@@ -36,7 +36,7 @@ namespace GasSimulation.Logs
         {
             Log("Iteration data");
 
-            for (int i = 0; i < elems.Atoms.Count; i++)
+            for (int i = 0; i < elems.Atoms.Length; i++)
             {
                 var atom = elems.Atoms[i];
 
@@ -44,7 +44,7 @@ namespace GasSimulation.Logs
                 Log($"x: {atom.X}, y: {atom.Y}, dx: {atom.Dx}, dy: {atom.Dy}");
             }
 
-            for (int i = 0; i < elems.Rects.Count; i++)
+            for (int i = 0; i < elems.Rects.Length; i++)
             {
                 var rect = elems.Rects[i];
 

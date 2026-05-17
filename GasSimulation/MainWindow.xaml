@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="GasSimulation" Height="450" Width="800" Background="Black"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown"
-        MouseWheel="Window_Scroll" MouseMove="Window_MouseMove">
+        MouseWheel="Window_Scroll" MouseMove="Window_MouseMove"
+        Closing="Window_Closing">
     <Grid x:Name="MainContainer">
         <Grid.RenderTransform>
             <MatrixTransform x:Name="ScaleMatrix" />

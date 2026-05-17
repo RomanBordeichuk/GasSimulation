@@ -2,7 +2,6 @@
 using GasSimulation.Configuration;
 using GasSimulation.Debuggers;
 using GasSimulation.Simulation;
-using GasSimulation.Simulation.InitStateTransformer;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Input;
@@ -15,8 +14,8 @@ namespace GasSimulation
     public partial class MainWindow : Window
     {
         private Config _config = null!;
-        private SimulationTimer _timer = null!;
         private MainVisualDebugger _debugger = null!;
+        private SimulationCore _simulation = null!;
 
         private Point _lastMousePos;
 
@@ -25,7 +24,7 @@ namespace GasSimulation
             InitializeComponent();
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var configManager = new ConfigManager("SimulationConfig.json");
             _config = configManager.GetConfig();
@@ -34,17 +33,16 @@ namespace GasSimulation
             var services = serviceConfigurator.Provider;
 
             _debugger = services.GetRequiredService<MainVisualDebugger>();
-            var initStateTransformer = services.GetRequiredService<ConfigInitStateTransformer>();
             var simulationBuilder = services.GetRequiredService<SimulationBuilder>();
-            var iterationCalculatorDebugger = services.GetRequiredService<SectorCalculatorVisualDebugger>();
-            var simulationTimerBuilder = services.GetRequiredService<SimulationTimerBuilder>();
 
-            var rawInitStates = configManager.GetElemInitStates();
-            var elemStates = await Task.Run(async () =>
-                await initStateTransformer.Transform(rawInitStates));
+            var rawInitState = configManager.GetElemInitStates();
 
-            var simulation = simulationBuilder.Build(elemStates, iterationCalculatorDebugger.IsDisabled());
-            _timer = simulationTimerBuilder.Build(simulation);
+            _simulation = simulationBuilder.Build(rawInitState);
+            var rendererBuilder = services.GetRequiredService<UIRendererBuilder>();
+            var iterationCalculatorDebugger = services.GetRequiredService<IterationCalculatorVisualDebugger>();
+
+            var renderer = rendererBuilder.Build(_simulation);
+            renderer.SubscribeOnRendering(iterationCalculatorDebugger.IsDisabled());
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -53,7 +51,7 @@ namespace GasSimulation
 
             switch (e.Key){
                 case Key.Space:
-                    _timer?.Toggle();
+                    _simulation.Toggle();
 
                     break;
 
@@ -93,6 +91,11 @@ namespace GasSimulation
             }
 
             _lastMousePos = e.GetPosition(this);
+        }
+
+        private void Window_Closing(object sender, EventArgs e)
+        {
+            _simulation.Stop();
         }
     }
 }

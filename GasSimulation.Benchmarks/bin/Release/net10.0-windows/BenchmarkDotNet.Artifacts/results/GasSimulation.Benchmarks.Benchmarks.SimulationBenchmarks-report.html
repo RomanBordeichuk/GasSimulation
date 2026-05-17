@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>GasSimulation.Benchmarks.Benchmarks.SimulationBenchmarks-20260509-134800</title>
+<title>GasSimulation.Benchmarks.Benchmarks.SimulationBenchmarks-20260517-232516</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,19 +13,19 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Windows 11 (10.0.26200.8246/25H2/2025Update/HudsonValley2)
+BenchmarkDotNet v0.15.8, Windows 11 (10.0.26200.8457/25H2/2025Update/HudsonValley2)
 AMD Ryzen 5 7535HS with Radeon Graphics 3.30GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK 10.0.300-preview.0.26177.108
-  [Host]     : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3
-  DefaultJob : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.300
+  [Host]     : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
+  DefaultJob : .NET 10.0.8 (10.0.8, 10.0.826.23019), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code></code></pre>
 
 <table>
-<thead><tr><th>Method      </th><th>NumAtoms</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Rank</th><th>Allocated</th>
+<thead><tr><th>Method      </th><th>NumAtoms</th><th>Mean  </th><th>Error  </th><th>StdDev </th><th>Median</th><th>Rank</th><th>Gen0</th><th>Gen1</th><th>Gen2</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>CalculateIteration</td><td>500</td><td>189.8 &mu;s</td><td>2.38 &mu;s</td><td>2.11 &mu;s</td><td>189.8 &mu;s</td><td>1</td><td>-</td>
-</tr><tr><td>CalculateIteration</td><td>1000</td><td>8,139.6 &mu;s</td><td>2,378.97 &mu;s</td><td>6,709.93 &mu;s</td><td>5,554.9 &mu;s</td><td>2</td><td>48 B</td>
+</thead><tbody><tr><td>CalculateIteration</td><td>1000</td><td>443.2 &mu;s</td><td>8.74 &mu;s</td><td>20.60 &mu;s</td><td>445.4 &mu;s</td><td>1</td><td>218.2617</td><td>218.2617</td><td>62.0117</td><td>764.51 KB</td>
+</tr><tr><td>CalculateIteration</td><td>5000</td><td>592,418.3 &mu;s</td><td>186,806.04 &mu;s</td><td>523,824.21 &mu;s</td><td>359,146.5 &mu;s</td><td>2</td><td>21000.0000</td><td>10000.0000</td><td>4000.0000</td><td>176108.24 KB</td>
 </tr></tbody></table>
 </body>
 </html>

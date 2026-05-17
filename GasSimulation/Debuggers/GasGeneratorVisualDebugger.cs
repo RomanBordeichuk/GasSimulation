@@ -4,8 +4,8 @@ using GasSimulation.GeneralDTOs;
 using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Mappers;
 using GasSimulation.Simulation.GasGenerator.DTOs;
-using GasSimulation.Simulation.InitStateTransformer.DTOs;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
+using GasSimulation.Transformers.ConfigInitStateTransformer.DTOs;
 using System.Diagnostics;
 using System.Windows.Media;
 

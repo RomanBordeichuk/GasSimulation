@@ -18,7 +18,7 @@ namespace GasSimulation.Debuggers
 
         protected const string _atomsGroup = "Atoms";
         protected const string _rectsGroup = "Rects";
-        private const string _vectorsGroup = "Vectors";
+        protected const string _vectorsGroup = "Vectors";
 
         protected ConcreteVisualDebugger(Config config, VisualDebugger debugger)
         {
@@ -49,14 +49,13 @@ namespace GasSimulation.Debuggers
         }
 
         [Conditional("DEBUG")]
-        public void CreateAtoms(List<AtomState> atoms)
+        public void CreateAtoms(AtomState[] atoms)
         {
             if (_disabled) return;
 
             foreach (var atom in atoms)
             {
-                _debugger.Draw(_atomsGroup, atom,
-                    _config.Brushes!.Elem, null);
+                _debugger.Draw(_atomsGroup, atom, _config.Brushes!.Elem, null);
             }
         }
 
@@ -69,7 +68,7 @@ namespace GasSimulation.Debuggers
         }
 
         [Conditional("DEBUG")]
-        public void CreateRects(List<RectState> rects)
+        public void CreateRects(RectState[] rects)
         {
             if (_disabled) return;
 
@@ -111,12 +110,16 @@ namespace GasSimulation.Debuggers
         [Conditional("DEBUG")]
         public void CreateVector(AtomState atom)
         {
+            if (_disabled) return;
+
             CreateVector(atom, 1);
         }
 
         [Conditional("DEBUG")]
         public void CreateVector(AtomState atom, double t)
         {
+            if (_disabled) return;
+
             var vector = new VectorState(atom.Pos,
                 new(atom.X + atom.Dx * t, atom.Y + atom.Dy * t), 2);
 
@@ -139,22 +142,29 @@ namespace GasSimulation.Debuggers
             _debugger.ClearAll();
         }
 
-        public async ValueTask Stop()
-        {
-#if DEBUG
-            if (_disabled) return;
-
-            await _debugger.Stop();
-#endif
-        }
-
-        public T GetParam<T>(string name)
+        protected T GetParam<T>(string name)
         {
             if (_params.TryGetValue(name, out object? value) && value is T valueT)
             {
                 return valueT;
             }
             throw new IncorrectParamException();
+        }
+
+        [Conditional("DEBUG")]
+        public void BreakPoint()
+        {
+            if (_disabled) return;
+
+            _debugger.BreakPoint();
+        }
+
+        [Conditional("DEBUG")]
+        public void Debug()
+        {
+            if (_disabled) return;
+
+            _debugger.Debug();
         }
     }
 }

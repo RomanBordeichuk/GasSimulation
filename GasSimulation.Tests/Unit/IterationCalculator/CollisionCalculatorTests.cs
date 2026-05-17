@@ -2,6 +2,7 @@
 using GasSimulation.GeneralDTOs.Atom;
 using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Simulation.IterationCalculator;
+using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 
 namespace GasSimulation.Tests.Unit.IterationCalculator
@@ -51,21 +52,26 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
             AtomState atomState1 = new(new(x1, y1), new(dx1, dy1));
             AtomState atomState2 = new(new(x2, y2), new(dx2, dy2));
 
+            var serviceConfigurator = new ServiceConfigurator(_config, null, null);
+            var services = serviceConfigurator.Provider;
+
+            var collisionCalculator = services.GetRequiredService<CollisionCalculator>();
+
             //Act
 
-            (double? t, double? angle) = CollisionCalculator.CalculateAtomTAndAngle(_config, atomState1, atomState2, remT);
+            (double t, double angle) = collisionCalculator.CalculateAtomTAndAngle(atomState1, atomState2, remT);
 
             //Assert
 
             if(expT == null)
             {
-                Assert.Null(t);
-                Assert.Null(angle);
+                Assert.Equal(-1, t, _config.Simulation.Precision);
+                Assert.Equal(0, angle, _config.Simulation.Precision);
             }
             else
             {
-                Assert.Equal(expT.Value, t!.Value, _config.Simulation.Precision);
-                Assert.Equal(expAngle!.Value, angle!.Value, _config.Simulation.Precision);
+                Assert.Equal(expT.Value, t, _config.Simulation.Precision);
+                Assert.Equal(expAngle!.Value, angle, _config.Simulation.Precision);
             }
         }
 
@@ -206,22 +212,27 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
             AtomState atomState = new(new(x1, y1), new(dx1, dy1));
             RectState rectState = new(new(x2, y2), new(width, height), rectAngle);
 
+            var serviceConfigurator = new ServiceConfigurator(_config, null, null);
+            var services = serviceConfigurator.Provider;
+
+            var collisionCalculator = services.GetRequiredService<CollisionCalculator>();
+
             //Act
 
-            (double? t, double? angle) = CollisionCalculator.CalculateRectTAndAngle(
-                _config, atomState, rectState, remT);
+            (double t, double angle) = collisionCalculator.CalculateRectTAndAngle(
+                atomState, rectState, remT);
 
             //Accert
 
             if(expT == null)
             {
-                Assert.Null(t);
-                Assert.Null(angle);
+                Assert.Equal(-1, t, _config.Simulation.Precision);
+                Assert.Equal(0, angle, _config.Simulation.Precision);
             }
             else
             {
-                Assert.Equal(expT.Value, t!.Value, _config.Simulation.Precision);
-                Assert.Equal(expAngle!.Value, angle!.Value, _config.Simulation.Precision);
+                Assert.Equal(expT.Value, t, _config.Simulation.Precision);
+                Assert.Equal(expAngle!.Value, angle, _config.Simulation.Precision);
             }
         }
 

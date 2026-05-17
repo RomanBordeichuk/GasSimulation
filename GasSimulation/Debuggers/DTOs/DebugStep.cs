@@ -2,29 +2,50 @@
 
 namespace GasSimulation.Debuggers.DTOs
 {
-    public struct DebugStep
+    public class DebugStep
     {
-        public List<IDrawCommand> AddedElems { get; } = new();
-        public List<IDrawCommand> DeletedElems { get; } = new();
+        public List<IDrawCommand> AddedElems { get; }
+        public List<IDrawCommand> DeletedElems { get; }
 
-        public DebugStep() { }
-
-        public void DeleteElems(List<IDrawCommand> elems)
+        public DebugStep(List<IDrawCommand> addedElems, List<IDrawCommand> deletedElems)
         {
-            foreach (var elem in elems)
-            {
-                AddedElems.Remove(elem);
-            }
-
-            DeletedElems.AddRange(elems);
+            AddedElems = addedElems;
+            DeletedElems = deletedElems;
         }
 
-        public void DeleteElems(Dictionary<string, List<IDrawCommand>> groups)
+        public DebugStep()
         {
-            foreach (var group in groups)
+            AddedElems = new();
+            DeletedElems = new();
+        }
+
+        public void AddElems(IEnumerable<IDrawCommand> elems)
+        {
+            foreach (IDrawCommand elem in elems) AddElem(elem);
+        }
+
+        public void AddElem(IDrawCommand elem)
+        {
+            if (!AddedElems.Contains(elem)) AddedElems.Add(elem);
+            DeletedElems.Remove(elem);
+        }
+
+        public void RemoveElems(IEnumerable<IEnumerable<IDrawCommand>> elems)
+        {
+            foreach (var group in elems)
             {
-                DeleteElems(group.Value);
+                foreach (var elem in group) RemoveElem(elem);
             }
+        }
+        public void RemoveElems(IEnumerable<IDrawCommand> elems)
+        {
+            foreach (IDrawCommand elem in elems) RemoveElem(elem);
+        }
+
+        public void RemoveElem(IDrawCommand elem)
+        {
+            if (!DeletedElems.Contains(elem)) DeletedElems.Add(elem);
+            AddedElems.Remove(elem);
         }
     }
 }

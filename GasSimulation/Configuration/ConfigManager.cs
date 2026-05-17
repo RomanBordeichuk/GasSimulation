@@ -1,6 +1,6 @@
 ﻿using GasSimulation.Configuration.ConfigParts;
 using GasSimulation.Exceptions;
-using GasSimulation.Simulation.InitStateTransformer.DTOs;
+using GasSimulation.Transformers.ConfigInitStateTransformer.DTOs;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 

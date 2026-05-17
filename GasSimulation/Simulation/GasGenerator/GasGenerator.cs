@@ -4,8 +4,8 @@ using GasSimulation.Exceptions;
 using GasSimulation.GeneralDTOs;
 using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Simulation.GasGenerator.DTOs;
-using GasSimulation.Simulation.InitStateTransformer.DTOs;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
+using GasSimulation.Transformers.ConfigInitStateTransformer.DTOs;
 
 namespace GasSimulation.Simulation.GasGenerator
 {
@@ -27,7 +27,7 @@ namespace GasSimulation.Simulation.GasGenerator
             _debugger = debugger;
         }
 
-        public async ValueTask<List<AtomConfigInitState>>
+        public List<AtomConfigInitState>
             Generate(RectState area, int numAtoms, double speed)
         {
             area = new(area.Pos, area.Dimentions, area.Angle * Math.PI / 180);
@@ -41,8 +41,8 @@ namespace GasSimulation.Simulation.GasGenerator
 
             CellsArray cellsArray = new(numCellsX, numCellsY);
 
-            List<(int i, int j)> freeCellsIds = new(numCellsX * numCellsY);
-            List<(int i, int j)> partlyOccupiedCellsIds = new();
+            List<IDPosState> freeCellsIds = new(numCellsX * numCellsY);
+            List<IDPosState> partlyOccupiedCellsIds = new();
 
             double translateX = ((double)numCellsX - 1) * cellSize / 2;
             double translateY = ((double)numCellsY - 1) * cellSize / 2;
@@ -53,16 +53,16 @@ namespace GasSimulation.Simulation.GasGenerator
                 {
                     cellsArray.Array[i * cellsArray.Width + j] = new(
                         new(j * cellSize - translateX, i * cellSize - translateY));
-                    freeCellsIds.Add((i, j));
+                    freeCellsIds.Add(new(i, j));
                 }
             }
 
             _debugger.SetParam<RectState>("Area", area);
             _debugger.SetParam<TranslateFieldDelegate>("TranslateFieldMethod", TranslateField);
 
-            await _debugger.Stop();
+            _debugger.BreakPoint();
             _debugger.CreateSector();
-            await _debugger.Stop();
+            _debugger.BreakPoint();
 
             List<AtomConfigInitState> atoms = new();
 
@@ -85,18 +85,18 @@ namespace GasSimulation.Simulation.GasGenerator
                 else throw new NotEnoughPlaceException();
 
                 _debugger.CreateAtom(atoms[atoms.Count - 1]);
-
-                await _debugger.Stop();
+                _debugger.BreakPoint();
             }
 
             _debugger.ClearAll();
-
-            await _debugger.Stop();
+            _debugger.BreakPoint();
 
             for (int i = 0; i < atoms.Count; i++)
             {
                 atoms[i] = new(TranslateField(ref area, atoms[i].Pos), atoms[i].Speed, atoms[i].Angle);
             }
+
+            _debugger.Debug();
 
             return atoms;
         }

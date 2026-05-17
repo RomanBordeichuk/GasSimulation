@@ -3,15 +3,21 @@ using GasSimulation.GeneralDTOs.Rect;
 
 namespace GasSimulation.Simulation.DTOs
 {
-    public struct AllStates
+    public class AllStates
     {
-        public List<AtomState> Atoms { get; }
-        public List<RectState> Rects { get; }
+        public AtomState[] Atoms { get; }
+        public RectState[] Rects { get; }
 
-        public AllStates(IEnumerable<AtomState> atoms, IEnumerable<RectState> rects)
+        public AllStates(AtomState[] atoms, RectState[] rects)
         {
-            Atoms = atoms.ToList();
-            Rects = rects.ToList();
+            Atoms = atoms;
+            Rects = rects;
+        }
+
+        public AllStates()
+        {
+            Atoms = [];
+            Rects = [];
         }
     }
 }

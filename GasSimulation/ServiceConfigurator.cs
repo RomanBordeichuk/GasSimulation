@@ -2,8 +2,9 @@
 using GasSimulation.Configuration;
 using GasSimulation.Debuggers;
 using GasSimulation.Simulation.GasGenerator;
-using GasSimulation.Simulation.InitStateTransformer;
 using GasSimulation.Simulation.IterationCalculator;
+using GasSimulation.Simulation.IterationCalculator.Helpers;
+using GasSimulation.Transformers.ConfigInitStateTransformer;
 using GasSimulation.UIRendering;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Controls;
@@ -36,15 +37,18 @@ namespace GasSimulation
             services.AddSingleton<RandomCellFiller>();
             services.AddSingleton<AtomGenerator>();
             services.AddSingleton<GasGenerator>();
-            services.AddSingleton<SectorCalculatorVisualDebugger>();
-            services.AddSingleton<SectorCalculator>();
+            services.AddSingleton<IterationCalculatorVisualDebugger>();
             services.AddSingleton<ConfigInitStateTransformer>();
             services.AddSingleton<SimulationBuilder>();
-            services.AddSingleton<SimulationTimerBuilder>();
-            services.AddSingleton<SectorTransformer>();
+            services.AddSingleton<SectorPartitioner>();
+            services.AddSingleton<CollisionCalculatorHelper>();
+            services.AddSingleton<CollisionCalculator>();
+            services.AddSingleton<ClosestCollisionCalculator>();
             services.AddSingleton<IterationCalculator>();
-            services.AddSingleton<SectorTransformerVisualDebugger>();
+            services.AddSingleton<SectorPartitionerVisualDebugger>();
             services.AddSingleton<MainVisualDebugger>();
+            services.AddSingleton<UIRendererBuilder>();
+            services.AddSingleton<ManualResetEventSlim>();
 
             _provider = services.BuildServiceProvider();
         }

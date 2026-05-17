@@ -12,31 +12,31 @@ namespace GasSimulation.Benchmarks.Benchmarks
     [RankColumn]
     public class SimulationBenchmarks : BenchmarksBase
     {
-        private AllStates _allStates;
-        private SectorCalculator _iterationCalculator = null!;
+        private AllStates _allStates = null!;
+        private IterationCalculator _iterationCalculator = null!;
 
-        [Params(500, 1000)]
+        [Params(1000, 5000)]
         public int NumAtoms { get; set; }
 
         [GlobalSetup]
-        public async ValueTask Setup()
+        public void Setup()
         {
             var serviceConfigurator = new ServiceConfigurator(_config, null, null);
             var services = serviceConfigurator.Provider;
 
             var gasGenerator = services.GetRequiredService<GasGenerator>();
-            _iterationCalculator = services.GetRequiredService<SectorCalculator>();
+            _iterationCalculator = services.GetRequiredService<IterationCalculator>();
 
-            var area = new RectState(100, 100, 400, 400, 0);
-            var rawAtoms = await gasGenerator.Generate(area, NumAtoms, 100);
+            var area = new RectState(100, 100, 1000, 1000, 0);
+            var rawAtoms = gasGenerator.Generate(area, NumAtoms, 100);
 
-            _allStates = new(rawAtoms.MapToStates(_config), new List<RectState>());
+            _allStates = new(rawAtoms.MapToStates(_config).ToArray(), []);
         }
 
         [Benchmark]
-        public async ValueTask CalculateIteration()
+        public void CalculateIteration()
         {
-            await _iterationCalculator.Calculate(_allStates);
+            _iterationCalculator.Calculate(_allStates);
         }
     }
 }

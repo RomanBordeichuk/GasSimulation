@@ -1,9 +1,9 @@
 ﻿namespace GasSimulation.Configuration.ConfigParts
 {
-    public record DebugConfig( ActiveVisualDebugModule[] DebugModules, int DebugSteps);
+    public record DebugConfig(ActiveVisualDebugModule[] DebugModules);
 
     public enum ActiveVisualDebugModule
     {
-        GasGenerator, IterationCalculator, SectorCalculator
+        GasGenerator, IterationCalculator, SectorTransformer
     }
 }

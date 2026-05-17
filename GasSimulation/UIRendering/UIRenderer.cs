@@ -1,0 +1,31 @@
+﻿using GasSimulation.Configuration;
+using GasSimulation.Simulation;
+using System.Windows.Media;
+
+namespace GasSimulation.UIRendering
+{
+    public class UIRenderer
+    {
+        private readonly Config _config;
+        private readonly SimulationField _field;
+        private readonly SimulationCore _simulation;
+
+        public UIRenderer(Config config, SimulationField field, SimulationCore simulation)
+        {
+            _config = config;
+            _field = field;
+            _simulation = simulation;
+        }
+
+        public void SubscribeOnRendering(bool renderEnabled)
+        {
+            if (!renderEnabled) return;
+
+            CompositionTarget.Rendering += (s, e) =>
+            {
+                var snapshot = _simulation.GetSnapshot();
+                _field.RenderFrame(_config, snapshot);
+            };
+        }
+    }
+}

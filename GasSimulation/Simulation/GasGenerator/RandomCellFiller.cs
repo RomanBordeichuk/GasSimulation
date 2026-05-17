@@ -24,7 +24,7 @@ namespace GasSimulation.Simulation.GasGenerator
         }
 
         public PosState FillFreeCell(CellsArray cellsArray,
-            List<(int i, int j)> freeCellsIds, List<(int i, int j)> partlyOccupiedCellsIds)
+            List<IDPosState> freeCellsIds, List<IDPosState> partlyOccupiedCellsIds)
         {
             int randomId = _rand.Next(0, freeCellsIds.Count);
 
@@ -39,7 +39,7 @@ namespace GasSimulation.Simulation.GasGenerator
         }
 
         public PosState FillPartlyOccupiedCell(CellsArray cellsArray, 
-            List<(int i, int j)> partlyOccupiedCellsIds)
+            List<IDPosState> partlyOccupiedCellsIds)
         {
             CellState partlyOccupiedCell;
             double relX = 0;
@@ -51,8 +51,8 @@ namespace GasSimulation.Simulation.GasGenerator
                 if (partlyOccupiedCellsIds.Count == 0) throw new NotEnoughPlaceException();
 
                 cellId = _rand.Next(0, partlyOccupiedCellsIds.Count);
-                partlyOccupiedCell = cellsArray.Array[partlyOccupiedCellsIds[cellId].i * cellsArray.Width + 
-                    partlyOccupiedCellsIds[cellId].j];
+                partlyOccupiedCell = cellsArray.Array[partlyOccupiedCellsIds[cellId].I * cellsArray.Width + 
+                    partlyOccupiedCellsIds[cellId].J];
 
                 int attempts;
 

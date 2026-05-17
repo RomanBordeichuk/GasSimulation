@@ -8,6 +8,7 @@ namespace GasSimulation.Debuggers
         public MainVisualDebugger(Config config, VisualDebugger debugger)
             : base (config, debugger) { }
 
+        [Conditional("DEBUG")]
         public void StepNext()
         {
             if (_disabled) return;

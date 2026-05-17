@@ -1,175 +1,198 @@
-﻿using GasSimulation.Configuration;
-using GasSimulation.Debuggers.DTOs;
+﻿using GasSimulation.Debuggers.DTOs;
 using GasSimulation.Debuggers.DTOs.Interfaces;
 using GasSimulation.Exceptions;
 using GasSimulation.GeneralDTOs.Interfaces;
 using GasSimulation.UIRendering;
+using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Media;
 
 namespace GasSimulation.Debuggers
 {
     public class VisualDebugger
     {
-        private readonly Config _config;
+        private readonly ManualResetEventSlim _coreResetEvent;
         private readonly DebugCanvas? _canvas;
 
-        private TaskCompletionSource _debugWaitHandler = null!;
-        private readonly Dictionary<string, List<IDrawCommand>> _groupsList = new();
-        private readonly DebugStep[] _debugSteps;
-        private int _currentStep = 0;
+        private readonly ConcurrentQueue<IDebugCommand> _commandsQueue;
 
-        public VisualDebugger(Config config, DebugCanvas? canvas = null)
+        private List<DebugStep> _debugSteps = null!;
+        private int _currentStepId = 0;
+
+        public VisualDebugger(ManualResetEventSlim coreResetEvent, 
+            DebugCanvas? canvas = null)
         {
-            _config = config;
+            _coreResetEvent = coreResetEvent;
             _canvas = canvas;
 
-            if (canvas == null)
-            {
-                _debugSteps = [];
-                return;
-            }
-
-            _debugSteps = new DebugStep[_config.Debug!.DebugSteps];
-
-            for (int i = 0; i < _debugSteps.Length; i++)
-            {
-                _debugSteps[i] = new();
-            }
+            _commandsQueue = new();
         }
 
         public void ClearGroup(string name)
         {
-            if (!_groupsList.TryGetValue(name, out var currentGroup)) return;
-
-            _debugSteps[0].DeleteElems(currentGroup);
-            _groupsList.Remove(name);
-
-            _canvas!.Clear(currentGroup);
+            _commandsQueue.Enqueue(new ClearGroupCommand(name));
         }
 
         public void ClearAll()
         {
-            _debugSteps[0].DeleteElems(_groupsList);
-            _groupsList.Clear();
-
-            _canvas!.ClearAll();
+            _commandsQueue.Enqueue(new ClearAllCommand());
         }
 
         public void Draw<T>(string groupName, T item, 
             SolidColorBrush brush, int? zindex)
             where T : IElemState
         {
-            var command = new DrawCommand(item, brush, zindex);
-
-            AddToGroups(groupName, command);
-            _debugSteps[0].AddedElems.Add(command);
-
-            _canvas!.Draw(command);
+            _commandsQueue.Enqueue(new DrawCommand(item, brush, zindex, groupName));
         }
 
         public void DrawHollow<T>(string groupName, T item, 
             double border, SolidColorBrush brush, int? zindex)
             where T : IElemState
         {
-            var command = new DrawHollowCommand(item, border, brush, zindex);
-
-            AddToGroups(groupName, command);
-            _debugSteps[0].AddedElems.Add(command);
-
-            _canvas!.DrawHollow(command);
+            _commandsQueue.Enqueue(new DrawHollowCommand(item, border, brush, zindex, groupName));
         }
 
-        public async ValueTask Stop()
+        public void BreakPoint()
         {
-            _debugWaitHandler = new();
-            await _debugWaitHandler.Task;
+            _commandsQueue.Enqueue(new BreakPointCommand());
+        }
+
+        public void Debug()
+        {
+            PrepareToDebug();
+
+            _coreResetEvent.Reset();
+            _coreResetEvent.Wait();
         }
 
         public void StepNext()
         {
-            if (_currentStep == 0)
+            if (_currentStepId < _debugSteps.Count)
             {
-                InitNewStep();
-                _debugWaitHandler.TrySetResult();
+                ExecuteStep(_debugSteps[_currentStepId]);
+                _currentStepId++;
             }
-            else
-            {
-                _currentStep--;
-                RedrawStep(_debugSteps[_currentStep]);
-            }
+            else EndDebug();
         }
 
         public void StepBack()
         {
-            if (_currentStep < _config.Debug!.DebugSteps - 1)
+            if (_currentStepId > 0)
             {
-                RollbackStep(_debugSteps[_currentStep]);
-                _currentStep++;
+                _currentStepId--;
+                RollbackStep(_debugSteps[_currentStepId]);
             }
         }
 
-        private void AddToGroups(string groupName, IDrawCommand command)
+        [SuppressMessage("SonarLint", "S3776")]
+        private void PrepareToDebug()
         {
-            if (_groupsList.TryGetValue(groupName, out var group))
+            _currentStepId = 0;
+            _debugSteps = new();
+
+            var groups = new Dictionary<string, List<IDrawCommand>>();
+            var debugStep = new DebugStep();
+
+            while (_commandsQueue.TryDequeue(out var command))
             {
-                group.Add(command);
+                switch (command)
+                {
+                    case IDrawCommand draw:
+                        {
+                            AddToGroups(groups, draw);
+                            debugStep.AddElem(draw);
+
+                            break;
+                        }
+
+                    case ClearGroupCommand clearGroup:
+                        {
+                            var group = DeleteGroup(groups, clearGroup.GroupName);
+                            debugStep.RemoveElems(group);
+
+                            break;
+                        }
+
+                    case ClearAllCommand:
+                        {
+                            debugStep.RemoveElems(groups.Values);
+                            groups.Clear();
+
+                            break;
+                        }
+
+                    case BreakPointCommand:
+                        {
+                            _debugSteps.Add(debugStep);
+                            debugStep = new();
+
+                            break;
+                        }
+
+                    default: throw new IncorrectTypeException();
+                }
+            }
+        }
+
+        private static void AddToGroups(Dictionary<string, List<IDrawCommand>> groups, IDrawCommand elem)
+        {
+            if (groups.TryGetValue(elem.GroupName, out var group))
+            {
+                group.Add(elem);
 
                 return;
             }
 
-            _groupsList.Add(groupName, new() { command });
+            groups.Add(elem.GroupName, new() { elem });
         }
 
-        private void InitNewStep()
+        private static List<IDrawCommand> DeleteGroup(Dictionary<string, List<IDrawCommand>> groups, 
+            string groupName)
         {
-            for (int i = _debugSteps.Length - 1; i > 0; i--)
+            if (groups.TryGetValue(groupName, out var group))
             {
-                _debugSteps[i] = _debugSteps[i - 1];
+                groups.Remove(groupName);
+                return group;
             }
 
-            _debugSteps[0] = new();
+            throw new IncorrectGroupException();
         }
 
-        private void RollbackStep(DebugStep step)
-        {
-            foreach (var elem in step.AddedElems)
+        private void ExecuteStep(DebugStep debugStep)
+        {   
+            foreach (var elem in debugStep.AddedElems)
+            {
+                if (elem is DrawCommand draw) _canvas!.Draw(draw);
+                else if (elem is DrawHollowCommand drawHollow) _canvas!.DrawHollow(drawHollow);
+                else throw new IncorrectTypeException();
+            }
+
+            foreach (var elem in debugStep.DeletedElems)
             {
                 _canvas!.Clear(elem);
             }
-
-            foreach (var command in step.DeletedElems)
-            {
-                if (command is DrawCommand drawCommand)
-                {
-                    _canvas!.Draw(drawCommand);
-                }
-                else if (command is DrawHollowCommand drawHollowCommand)
-                {
-                    _canvas!.DrawHollow(drawHollowCommand);
-                }
-                else throw new IncorrectTypeException();
-            }
         }
 
-        private void RedrawStep(DebugStep step)
+        private void RollbackStep(DebugStep debugStep)
         {
-            foreach (var elem in step.DeletedElems)
+            foreach (var elem in debugStep.DeletedElems)
+            {
+                if (elem is DrawCommand draw) _canvas!.Draw(draw);
+                else if (elem is DrawHollowCommand drawHollow) _canvas!.DrawHollow(drawHollow);
+                else throw new IncorrectTypeException();
+            }
+
+            foreach (var elem in debugStep.AddedElems)
             {
                 _canvas!.Clear(elem);
             }
+        }
 
-            foreach (var command in step.AddedElems)
-            {
-                if (command is DrawCommand drawCommand)
-                {
-                    _canvas!.Draw(drawCommand);
-                }
-                else if (command is DrawHollowCommand drawHollowCommand)
-                {
-                    _canvas!.DrawHollow(drawHollowCommand);
-                }
-                else throw new IncorrectTypeException();
-            }
+        private void EndDebug()
+        {
+            _coreResetEvent.Set();
         }
     }
+
+    public record struct ComplexKey(object Id, string GroupName); 
 }

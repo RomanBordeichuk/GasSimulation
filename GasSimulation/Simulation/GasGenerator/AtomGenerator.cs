@@ -1,5 +1,5 @@
 ﻿using GasSimulation.GeneralDTOs;
-using GasSimulation.Simulation.InitStateTransformer.DTOs;
+using GasSimulation.Transformers.ConfigInitStateTransformer.DTOs;
 
 namespace GasSimulation.Simulation.GasGenerator
 {

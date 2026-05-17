@@ -27,20 +27,6 @@ namespace GasSimulation.UIRendering
             _canvas = canvas;
         }
 
-        public void ClearAll()
-        {
-            Application.Current.Dispatcher.BeginInvoke(() =>
-            {
-                _elems.Clear();
-                _canvas.Children.Clear();
-            });
-        }
-
-        public void Clear(List<IDrawCommand> group)
-        {
-            foreach (var cmd in group) Clear(cmd);
-        }
-
         public void Clear(IDrawCommand command)
         {
             Application.Current.Dispatcher.BeginInvoke(() =>

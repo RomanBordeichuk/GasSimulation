@@ -86,7 +86,7 @@ namespace GasSimulation.Tests.Integration
 
         [Theory]
         [MemberData(nameof(MultipleAtomsNRects_StandartCase_ExpectedResult_Data))]
-        public async Task MultipleAtomsNRects_StandartCase_ExpectedResult(
+        public void MultipleAtomsNRects_StandartCase_ExpectedResult(
             AtomState[] atoms, RectState[] rects, int iterations, AtomState[] expAtoms)
         {
             //Arrange
@@ -96,11 +96,11 @@ namespace GasSimulation.Tests.Integration
             var serviceConfigurator = new ServiceConfigurator(_config, null, null);
             var services = serviceConfigurator.Provider;
 
-            var iterationCalculator = services.GetRequiredService<SectorCalculator>();
+            var iterationCalculator = services.GetRequiredService<IterationCalculator>();
 
             //Act
 
-            for (int i = 0; i < iterations; i++) await iterationCalculator.Calculate(elemStates);
+            for (int i = 0; i < iterations; i++) iterationCalculator.Calculate(elemStates);
 
             //Assert
 

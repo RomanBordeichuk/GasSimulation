@@ -8,6 +8,7 @@
     "Restitution": 1,
     "ErrorRate": 1e-10,
     "AtomDiameter": 10,
+    "SectorSizeMult": 10,
     "PasteAtomAttempts": 20
   }
 }

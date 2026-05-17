@@ -3,7 +3,7 @@ using GasSimulation.Debuggers;
 using GasSimulation.Exceptions;
 using GasSimulation.GeneralDTOs.Rect;
 using GasSimulation.Simulation.GasGenerator;
-using GasSimulation.Simulation.InitStateTransformer.DTOs;
+using GasSimulation.Transformers.ConfigInitStateTransformer.DTOs;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GasSimulation.Tests.Integration
@@ -213,7 +213,7 @@ namespace GasSimulation.Tests.Integration
 
         [Theory]
         [MemberData(nameof(Generate_StandartCase_ExpectedResult_Data))]
-        public async Task Generate_StandartCase_ExpectedResult(
+        public void Generate_StandartCase_ExpectedResult(
             int seed, double atomDiameter, RectState area, int numAtoms, double avSpeed, 
             List<AtomConfigInitState> expAtoms)
         {
@@ -230,7 +230,7 @@ namespace GasSimulation.Tests.Integration
 
             try
             {
-                List<AtomConfigInitState> atoms = await gasGenerator.Generate(area, numAtoms, avSpeed);
+                List<AtomConfigInitState> atoms = gasGenerator.Generate(area, numAtoms, avSpeed);
 
                 //Assert
 

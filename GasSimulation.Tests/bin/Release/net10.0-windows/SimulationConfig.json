@@ -7,7 +7,8 @@
     "ZoomScale": 1.03,
     "Restitution": 1,
     "ErrorRate": 1e-10,
-    "AtomDiameter": 10,
+    "AtomDiameter": 5,
+    "SectorSizeMult": 10,
     "PasteAtomAttempts": 20
   },
 
@@ -17,14 +18,15 @@
     "OccupiedCell": [ 150, 255, 134, 107 ],
     "PartlyOccupiedCell": [ 150, 255, 213, 97 ],
     "Sector": [ 150, 117, 255, 239 ],
-    "Vector": [ 255, 252, 57, 3 ]
+    "Vector": [ 255, 252, 57, 3 ],
+    "Area": [ 70, 78, 241, 252 ]
   },
 
   "DebugConfig": {
     // "GasGenerator"
     // "IterationCalculator"
-    "DebugModules": [ "GasGenerator" ],
-    "DebugSteps": 20
+    // "SectorTransformer"
+    "DebugModules": [ "" ]
   },
 
   "InitStates": {
@@ -71,8 +73,8 @@
       { // Variant 3
         "Gas": [
           {
-            "Area": [ 250, 300, 600, 300, 0 ],
-            "NumAtoms": 100,
+            "Area": [ 250, 300, 1000, 1000, 0 ],
+            "NumAtoms": 5000,
             "AtomSpeed": 100
           }
         ],
@@ -83,10 +85,10 @@
         "Gas": [],
         "Atoms": [],
         "Rects": [
-          [ -100, 300, 700, 15, 90 ],
-          [ 700, 300, 700, 15, 90 ],
-          [ 300, -50, 800, 15, 0 ],
-          [ 300, 650, 800, 15, 0 ]
+          [ -500, 400, 1500, 15, 90 ],
+          [ 1000, 400, 1500, 15, 90 ],
+          [ 200, -300, 1800, 15, 0 ],
+          [ 200, 1000, 1800, 15, 0 ]
         ]
       },
       { // Variant 5

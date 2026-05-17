@@ -9,13 +9,15 @@ namespace GasSimulation.Debuggers.DTOs
         public IElemState Elem { get; }
         public SolidColorBrush Brush { get; }
         public int? Zindex { get; }
+        public string GroupName { get; }
 
-        public DrawCommand(IElemState elem,
-            SolidColorBrush brush, int? zindex)
+        public DrawCommand(IElemState elem, SolidColorBrush brush, 
+            int? zindex, string groupName)
         {
             Elem = elem;
             Brush = brush;
             Zindex = zindex;
+            GroupName = groupName;
         }
     }
 }
