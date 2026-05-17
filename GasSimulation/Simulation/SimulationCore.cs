@@ -1,4 +1,5 @@
 ﻿using GasSimulation.Configuration;
+using GasSimulation.GeneralDTOs.Atom;
 using GasSimulation.Logs;
 using GasSimulation.Simulation.DTOs;
 using GasSimulation.Transformers.ConfigInitStateTransformer;
@@ -22,7 +23,7 @@ namespace GasSimulation.Simulation
 
         public SimulationCore(Config config,
             IterationCalculator.IterationCalculator iterationCalculator,
-            ConfigInitStateTransformer configInitStateTransformer, 
+            ConfigInitStateTransformer configInitStateTransformer,
             ManualResetEventSlim coreResetEvent,
             List<ConfigInitState> rawInitState)
         {
@@ -49,7 +50,7 @@ namespace GasSimulation.Simulation
                     startTime = sw.Elapsed.TotalMilliseconds;
 
                     Logger.Log($"Running... Iteration: {_iteration}");
-
+                    Logger.Log($"Selected atom: {_snapshot.SelectedAtom}");
                     UpdateShapshot(allStates);
                     ProcessIteration(allStates);
 
@@ -81,7 +82,7 @@ namespace GasSimulation.Simulation
         {
             if (Interlocked.CompareExchange(ref _snapshotUpdated, false, true))
             {
-                _snapshot = new(allStates.Atoms, allStates.Rects);
+                _snapshot = new(allStates.Atoms, allStates.Rects, _snapshot.SelectedAtom);
                 _snapshotUpdated = true;
             }
         }
@@ -104,6 +105,16 @@ namespace GasSimulation.Simulation
         {
             _disposed = true;
             _coreResetEvent.Set();
+        }
+
+        public void UnfocusAtom()
+        {
+            _snapshot.SelectedAtom = null;
+        }
+
+        public void FocusRandomAtom()
+        {
+            _snapshot.SelectedAtom = Random.Shared.Next(_snapshot.Atoms.Length);
         }
 
         public AllStates GetSnapshot()

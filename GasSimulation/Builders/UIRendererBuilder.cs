@@ -1,4 +1,5 @@
 ﻿using GasSimulation.Configuration;
+using GasSimulation.GeneralDTOs.Atom;
 using GasSimulation.Simulation;
 using GasSimulation.UIRendering;
 
@@ -15,9 +16,9 @@ namespace GasSimulation.Builders
             _field = field;
         }
 
-        public UIRenderer Build(SimulationCore simulation)
+        public UIRenderer Build(SimulationCore simulation, Action<AtomState> focusAtom)
         {
-            return new(_config, _field, simulation);
+            return new(_config, _field, simulation, focusAtom);
         }
     }
 }
