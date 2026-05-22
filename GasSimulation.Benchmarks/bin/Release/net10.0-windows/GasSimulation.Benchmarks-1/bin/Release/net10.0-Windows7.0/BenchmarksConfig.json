@@ -1,0 +1,14 @@
+{
+  "SimulationConfig": {
+    "FPS": 20,
+    "SpeedMult": 1,
+    "StartPosX": 200,
+    "StartPosY": 100,
+    "ZoomScale": 1.03,
+    "Restitution": 1,
+    "ErrorRate": 1e-10,
+    "AtomDiameter": 10,
+    "SectorSizeMult": 10,
+    "PasteAtomAttempts": 20
+  }
+}

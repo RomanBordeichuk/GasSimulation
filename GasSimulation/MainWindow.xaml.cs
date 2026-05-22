@@ -3,6 +3,7 @@ using GasSimulation.Configuration;
 using GasSimulation.Debuggers;
 using GasSimulation.Simulation;
 using Microsoft.Extensions.DependencyInjection;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -29,7 +30,18 @@ namespace GasSimulation
             var configManager = new ConfigManager("SimulationConfig.json");
             _config = configManager.GetConfig();
 
-            var serviceConfigurator = new ServiceConfigurator(_config, this.DebugCanvas, this.SimulationField);
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string logDir = Path.Combine(baseDir, "Logs");
+
+            if (!Directory.Exists(logDir))
+            {
+                Directory.CreateDirectory(logDir);
+            }
+
+            string logFile = Path.Combine(logDir, "Logs.csv");
+
+            var serviceConfigurator = new ServiceConfigurator(_config, this.DebugCanvas, this.SimulationField, 
+                null, logFile);
             var services = serviceConfigurator.Provider;
 
             _debugger = services.GetRequiredService<MainVisualDebugger>();

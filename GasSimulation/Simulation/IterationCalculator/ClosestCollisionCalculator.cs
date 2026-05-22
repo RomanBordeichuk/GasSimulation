@@ -34,7 +34,7 @@ namespace GasSimulation.Simulation.IterationCalculator
                 CollisionState<AtomState, AtomState> atomCollision,
                 CollisionState<AtomState, RectState> rectCollision)[sectsArr.Length];
 
-            for (int index = 0; index < sectsArr.Length; index++)
+            Parallel.For(0, sectsArr.Length, (index) =>
             {
                 var sect = sectsArr[index];
 
@@ -66,11 +66,6 @@ namespace GasSimulation.Simulation.IterationCalculator
                 }
 
                 collisionStatesArr[index] = (localLowestT, localAtomCollision, localRectsCollision);
-            }
-
-            Parallel.For(0, sectsArr.Length, (index) =>
-            {
-                
             });
 
             double lowestT = 1;

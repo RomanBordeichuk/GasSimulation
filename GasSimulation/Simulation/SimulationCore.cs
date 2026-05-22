@@ -11,8 +11,9 @@ namespace GasSimulation.Simulation
     {
         private readonly IterationCalculator.IterationCalculator _iterationCalculator;
         private readonly ConfigInitStateTransformer _configInitStateTransformer;
-
         private readonly ManualResetEventSlim _coreResetEvent;
+        private readonly FileLogger _fileLogger;
+
         private readonly ManualResetEventSlim _timeoutResetEvent;
         private AllStates _snapshot;
         private int _iteration = 0;
@@ -22,14 +23,16 @@ namespace GasSimulation.Simulation
 
         public SimulationCore(Config config,
             IterationCalculator.IterationCalculator iterationCalculator,
-            ConfigInitStateTransformer configInitStateTransformer, 
+            ConfigInitStateTransformer configInitStateTransformer,
             ManualResetEventSlim coreResetEvent,
+            FileLogger logger,
             List<ConfigInitState> rawInitState)
         {
             _iterationCalculator = iterationCalculator;
             _configInitStateTransformer = configInitStateTransformer;
-
             _coreResetEvent = coreResetEvent;
+            _fileLogger = logger;
+
             _timeoutResetEvent = new();
             _snapshot = new();
 
@@ -43,15 +46,34 @@ namespace GasSimulation.Simulation
                 int delay = 0;
 
                 var allStates = ProcessPreIteration(rawInitState);
+                UpdateShapshot(allStates);
+                _coreResetEvent.Wait();
 
                 while (!_disposed)
                 {
                     startTime = sw.Elapsed.TotalMilliseconds;
 
-                    Logger.Log($"Running... Iteration: {_iteration}");
+                    //DebugLogger.Log($"Running... Iteration: {_iteration}");
+                    Trace.WriteLine($"Running... Iteration: {_iteration}");
 
                     UpdateShapshot(allStates);
                     ProcessIteration(allStates);
+
+                    ////
+                    //if (_iteration == 0)
+                    //{
+                    //    Trace.WriteLine("Logging...");
+                    //    _fileLogger.LogAllStates(allStates, _iteration);
+                    //}
+                    ////
+
+                    //
+                    if (_iteration == 2000)
+                    {
+                        Trace.WriteLine("Logging...");
+                        _fileLogger.LogAllStates(allStates, _iteration);
+                    }
+                    //
 
                     _iteration++;
 
@@ -74,7 +96,7 @@ namespace GasSimulation.Simulation
 
         private void ProcessIteration(AllStates allStates)
         {
-            _iterationCalculator.Calculate(allStates);
+            _iterationCalculator.Calculate(allStates, _iteration);
         }
 
         private void UpdateShapshot(AllStates allStates)

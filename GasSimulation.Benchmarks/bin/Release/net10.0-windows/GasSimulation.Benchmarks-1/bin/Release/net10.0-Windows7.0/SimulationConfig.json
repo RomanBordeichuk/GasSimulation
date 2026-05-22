@@ -1,0 +1,107 @@
+{
+  "SimulationConfig": {
+    "FPS": 20,
+    "SpeedMult": 1,
+    "StartPosX": 200,
+    "StartPosY": 100,
+    "ZoomScale": 1.03,
+    "Restitution": 1,
+    "ErrorRate": 1e-10,
+    "AtomDiameter": 5,
+    "SectorSizeMult": 10,
+    "PasteAtomAttempts": 20
+  },
+
+  "ColorsConfig": {
+    "Elem": [ 255, 255, 255, 255 ],
+    "GhostElem": [ 120, 255, 255, 255 ],
+    "OccupiedCell": [ 150, 255, 134, 107 ],
+    "PartlyOccupiedCell": [ 150, 255, 213, 97 ],
+    "Sector": [ 150, 117, 255, 239 ],
+    "Vector": [ 255, 252, 57, 3 ],
+    "Area": [ 70, 78, 241, 252 ]
+  },
+
+  "DebugConfig": {
+    // "GasGenerator"
+    // "IterationCalculator"
+    // "SectorTransformer"
+    "DebugModules": [ "" ]
+  },
+
+  "InitStates": {
+    "Active": [ 3, 4 ],
+    "Variants": [
+      { // Variant 0
+        "Gas": [],
+        "Atoms": [
+          [ 300, 100, 95, 135 ],
+          [ 100, 100, 105, 45 ],
+          [ 200, 100, 100, 0 ],
+          [ 120, 150, 100, -45 ],
+          [ 200, 600, 130, -90 ],
+          [ 500, 200, 100, 180 ],
+          [ 440, 550, 120, -120 ]
+        ],
+        "Rects": [
+          [ 350, 300, 150, 20, 30 ]
+        ]
+      },
+      { // Variant 1
+        "Gas": [],
+        "Atoms": [
+          [ 40, 52.2, 70, 0 ],
+          [ 70, 72, 70, 0 ],
+          [ 100, 80, 70, 0 ],
+          [ 100, 60, 70, 0 ],
+          [ 100, 120, 70, 0 ],
+          [ 100, 140, 70, 0 ]
+        ],
+        "Rects": [
+          [ 300, 100, 150, 15, 30 ],
+          [ 300, 150, 150, 15, 90 ]
+        ]
+      },
+      { // Variant 2
+        "Gas": [],
+        "Atoms": [
+          [ 100, 100, 100, 74 ],
+          [ 104, 200, 90, -90 ]
+        ],
+        "Rects": []
+      },
+      { // Variant 3
+        "Gas": [
+          {
+            "Area": [ 250, 300, 1000, 1000, 0 ],
+            "NumAtoms": 5000,
+            "AtomSpeed": 100
+          }
+        ],
+        "Atoms": [],
+        "Rects": []
+      },
+      { // Variant 4
+        "Gas": [],
+        "Atoms": [],
+        "Rects": [
+          [ -500, 400, 1500, 15, 90 ],
+          [ 1000, 400, 1500, 15, 90 ],
+          [ 200, -300, 1800, 15, 0 ],
+          [ 200, 1000, 1800, 15, 0 ]
+        ]
+      },
+      { // Variant 5
+        "Gas": [
+          {
+            "Area": [ 200, 100, 400, 300, 15 ],
+            "NumAtoms": 30,
+            "AtomSpeed": 100
+          }
+        ],
+        "Atoms": [],
+        "Rects": []
+      }
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 ﻿using GasSimulation.Builders;
 using GasSimulation.Configuration;
 using GasSimulation.Debuggers;
+using GasSimulation.Logs;
 using GasSimulation.Simulation.GasGenerator;
 using GasSimulation.Simulation.IterationCalculator;
 using GasSimulation.Simulation.IterationCalculator.Helpers;
@@ -16,11 +17,14 @@ namespace GasSimulation
         private readonly ServiceProvider _provider;
 
         public ServiceConfigurator(Config config, Canvas? canvas, 
-            SimulationField? field, int? randomSeed = null)
+            SimulationField? field, int? randomSeed, string? filePath)
         {
-            var rand = randomSeed != null ? new Random(randomSeed.Value) : new Random();
-
             var services = new ServiceCollection();
+
+            services.AddSingleton<Config>(config);
+
+            var rand = randomSeed != null ? new Random(randomSeed.Value) : new Random();
+            services.AddSingleton<Random>(rand);
 
             if (canvas != null)
             {
@@ -29,8 +33,9 @@ namespace GasSimulation
             }
             if (field != null) services.AddSingleton<SimulationField>(field);
 
-            services.AddSingleton<Random>(rand);
-            services.AddSingleton<Config>(config);
+            var fileLogger = new FileLogger(filePath);
+            services.AddSingleton<FileLogger>(fileLogger);
+
             services.AddSingleton<VisualDebugger>();
             services.AddSingleton<GasGeneratorVisualDebugger>();
             services.AddSingleton<EmptyCellFiller>();

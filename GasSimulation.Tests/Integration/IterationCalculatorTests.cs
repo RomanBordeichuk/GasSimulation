@@ -93,7 +93,7 @@ namespace GasSimulation.Tests.Integration
 
             AllStates elemStates = new(atoms, rects);
 
-            var serviceConfigurator = new ServiceConfigurator(_config, null, null);
+            var serviceConfigurator = new ServiceConfigurator(_config, null, null, null, null);
             var services = serviceConfigurator.Provider;
 
             var iterationCalculator = services.GetRequiredService<IterationCalculator>();

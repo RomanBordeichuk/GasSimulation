@@ -3,19 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\iterationcalculator\\closestcollisioncalculator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\iterationcalculator\\closestcollisioncalculator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DAA5284B-B909-43F2-9D8C-743EFB66B58E}|..\\GasSimulation.Benchmarks\\GasSimulation.Benchmarks.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation.benchmarks\\benchmarks\\simulationbenchmarks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulationconfig.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulationconfig.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\iterationcalculator\\iterationcalculator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\iterationcalculator\\iterationcalculator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|c:\\users\\borde\\desktop\\programming\\backend\\wpf\\gassimulation\\gassimulation\\simulation\\simulationcore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7542D9C-1382-0945-302D-57EDE7169774}|GasSimulation.csproj|solutionrelative:simulation\\simulationcore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -25,58 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SimulationBenchmarks.cs",
-              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation.Benchmarks\\Benchmarks\\SimulationBenchmarks.cs",
-              "RelativeDocumentMoniker": "..\\GasSimulation.Benchmarks\\Benchmarks\\SimulationBenchmarks.cs",
-              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation.Benchmarks\\Benchmarks\\SimulationBenchmarks.cs",
-              "RelativeToolTip": "..\\GasSimulation.Benchmarks\\Benchmarks\\SimulationBenchmarks.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBYAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-17T20:19:36.444Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "SimulationConfig.json",
               "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\SimulationConfig.json",
               "RelativeDocumentMoniker": "SimulationConfig.json",
               "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\SimulationConfig.json",
               "RelativeToolTip": "SimulationConfig.json",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAAAEwAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACAAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-05-17T17:31:04.928Z",
+              "WhenOpened": "2026-05-22T09:44:19.163Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ClosestCollisionCalculator.cs",
-              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\IterationCalculator\\ClosestCollisionCalculator.cs",
-              "RelativeDocumentMoniker": "Simulation\\IterationCalculator\\ClosestCollisionCalculator.cs",
-              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\IterationCalculator\\ClosestCollisionCalculator.cs",
-              "RelativeToolTip": "Simulation\\IterationCalculator\\ClosestCollisionCalculator.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAYwCYAAAArAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "SimulationCore.cs",
+              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\SimulationCore.cs",
+              "RelativeDocumentMoniker": "Simulation\\SimulationCore.cs",
+              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\SimulationCore.cs",
+              "RelativeToolTip": "Simulation\\SimulationCore.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAkwEMAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-17T16:20:27.883Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IterationCalculator.cs",
-              "DocumentMoniker": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\IterationCalculator\\IterationCalculator.cs",
-              "RelativeDocumentMoniker": "Simulation\\IterationCalculator\\IterationCalculator.cs",
-              "ToolTip": "C:\\Users\\borde\\Desktop\\Programming\\Backend\\WPF\\GasSimulation\\GasSimulation\\Simulation\\IterationCalculator\\IterationCalculator.cs",
-              "RelativeToolTip": "Simulation\\IterationCalculator\\IterationCalculator.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAYwCgAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-17T11:51:48.152Z",
+              "WhenOpened": "2026-05-21T13:33:44.842Z",
               "EditorCaption": ""
             }
           ]

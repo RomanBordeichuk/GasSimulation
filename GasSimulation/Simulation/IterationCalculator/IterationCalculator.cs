@@ -28,7 +28,7 @@ namespace GasSimulation.Simulation.IterationCalculator
             _debugger = debugger;
         }
 
-        public void Calculate(AllStates allStates)
+        public void Calculate(AllStates allStates, int iteration = 0)
         {
             _allStates = allStates;
             _remT = 1;
@@ -46,8 +46,6 @@ namespace GasSimulation.Simulation.IterationCalculator
 
                     break;
                 }
-
-                Logger.Log("Collision!!!");
 
                 if (lowerSide == -1) MoveToClosestAtomCollision(atomCollision);
                 else MoveToClosestRectCollision(rectCollision);

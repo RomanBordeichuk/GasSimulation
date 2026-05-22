@@ -21,7 +21,7 @@ namespace GasSimulation.Benchmarks.Benchmarks
         [GlobalSetup]
         public void Setup()
         {
-            var serviceConfigurator = new ServiceConfigurator(_config, null, null);
+            var serviceConfigurator = new ServiceConfigurator(_config, null, null, null, null);
             var services = serviceConfigurator.Provider;
 
             var gasGenerator = services.GetRequiredService<GasGenerator>();

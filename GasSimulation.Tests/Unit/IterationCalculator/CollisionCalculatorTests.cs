@@ -52,7 +52,7 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
             AtomState atomState1 = new(new(x1, y1), new(dx1, dy1));
             AtomState atomState2 = new(new(x2, y2), new(dx2, dy2));
 
-            var serviceConfigurator = new ServiceConfigurator(_config, null, null);
+            var serviceConfigurator = new ServiceConfigurator(_config, null, null, null, null);
             var services = serviceConfigurator.Provider;
 
             var collisionCalculator = services.GetRequiredService<CollisionCalculator>();
@@ -212,7 +212,7 @@ namespace GasSimulation.Tests.Unit.IterationCalculator
             AtomState atomState = new(new(x1, y1), new(dx1, dy1));
             RectState rectState = new(new(x2, y2), new(width, height), rectAngle);
 
-            var serviceConfigurator = new ServiceConfigurator(_config, null, null);
+            var serviceConfigurator = new ServiceConfigurator(_config, null, null, null, null);
             var services = serviceConfigurator.Provider;
 
             var collisionCalculator = services.GetRequiredService<CollisionCalculator>();

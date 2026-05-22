@@ -221,7 +221,7 @@ namespace GasSimulation.Tests.Integration
 
             var config = new Config(_config.Simulation.Copy(atomDiameter));
 
-            var serviceConfigurator = new ServiceConfigurator(config, null, null, seed);
+            var serviceConfigurator = new ServiceConfigurator(config, null, null, seed, null);
             var services = serviceConfigurator.Provider;
 
             var gasGenerator = services.GetRequiredService<GasGenerator>();
